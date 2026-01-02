@@ -105,6 +105,8 @@
             <a href="{{ route('contact') }}">Contact</a>
             <a href="{{ route('login') }}">Connexion</a>
             <a href="{{ route('register') }}">Inscription</a>
+           
+
         </nav>
     </header>
 

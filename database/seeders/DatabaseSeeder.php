@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
 
          // Appeler le seeder des catégories
         $this->call(CategorySeeder::class);
+        $this->call(AdminSeeder::class);
     }
 
     

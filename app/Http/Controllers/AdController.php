@@ -15,6 +15,14 @@ class AdController extends Controller
     public function index()
     {
         $ads = Ad::latest()->paginate(10);
+        $ads = Ad::where('statut', 'actif')->latest()->paginate(10);
+        $ads = Ad::where('statut', 'actif') 
+            ->where(function($q) { $q->whereNull('expires_at') 
+            ->orWhere('expires_at', '>', now()); }) 
+            ->latest() 
+            ->paginate(10);
+
+
         return view('ads.index', compact('ads'));
     }
 
@@ -37,31 +45,42 @@ class AdController extends Controller
      * Enregistrer une nouvelle publicité.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'plan' => 'required|string',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image' => 'nullable|image|max:2048',
-            'link' => 'nullable|url',
-        ]);
+{
+    $request->validate([
+        'plan' => 'required|string',
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'image' => 'nullable|image|max:2048',
+        'link' => 'nullable|url',
+    ]);
 
-        $pathImage = null;
-        if ($request->hasFile('image')) {
-            $pathImage = $request->file('image')->store('ads', 'public');
-        }
-
-        Ad::create([
-            'user_id' => Auth::id(),
-            'plan' => $request->plan,
-            'title' => $request->title,
-            'description' => $request->description,
-            'image' => $pathImage,
-            'link' => $request->link,
-        ]);
-
-        return redirect()->route('ads.index')->with('success', 'Votre publicité a été publiée avec succès !');
+    $pathImage = null;
+    if ($request->hasFile('image')) {
+        $pathImage = $request->file('image')->store('ads', 'public');
     }
+
+    // Durée selon le plan
+    $duration = match($request->plan) {
+        'basique'    => 7,   // expire après 1 jour
+        'premium'    => 15,   // expire après 7 jours
+        'entreprise' => 30,  // expire après 30 jours
+        default      => 7,
+    };
+
+    Ad::create([
+        'user_id' => Auth::id(),
+        'plan' => $request->plan,
+        'title' => $request->title,
+        'description' => $request->description,
+        'image' => $pathImage,
+        'link' => $request->link,
+        'statut' => 'brouillon', // ✅ par défaut
+        'expires_at' => now()->addDays($duration), // ✅ durée selon plan
+    ]);
+
+    return redirect()->route('ads.index')->with('success', 'Votre publicité a été publiée avec succès !');
+}
+
 
     /**
      * Supprimer une publicité.

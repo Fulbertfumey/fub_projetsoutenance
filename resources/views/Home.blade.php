@@ -587,8 +587,9 @@
                 <a href="{{ route('promotions.subscribe') }}" class="btn btn-primary">
                     📊 Découvrir tous les plans
                 </a>
-                <a href="{{ route('promotions.ads.store') }}" class="btn btn-success">
-                    🚀 Publier une publicité
+                <a
+                 href="{{ route('ads.index') }}" class="btn btn-success">
+                    🚀Voir les publicités
                 </a>
             </div>
         </div>

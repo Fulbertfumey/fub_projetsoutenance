@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <h2 style="text-align:center;">📣 Liste des publicités</h2>
 
 @if(session('success'))

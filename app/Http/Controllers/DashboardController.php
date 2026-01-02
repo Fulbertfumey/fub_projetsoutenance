@@ -6,6 +6,7 @@ use App\Models\Offer;
 use App\Models\Reservation;
 use App\Models\Conversation;
 use App\Models\Report;
+use App\Models\Ad; // n'oublie pas d'importer ton modèle Ad
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -18,11 +19,16 @@ class DashboardController extends Controller
     {
         // Offres en attente de validation
         $offers = Offer::where('statut', 'en_attente')->with('user')->get();
+        
+        // Publicités (toutes, avec leur utilisateur associé) 
+        $ads = Ad::with('user')->get();
 
         // Signalements
         $reports = Report::with(['reporter', 'reportedUser'])->get();
 
         // Statistiques globales
+        // Publicités en attente de validation 
+        $ads = Ad::where('statut', 'brouillon')->with('user')->get();
         $offersValidated = Offer::where('statut', 'valide')->count();
         $offersRefused   = Offer::where('statut', 'refuse')->count();
         $reportsPending  = Report::where('statut', 'en_attente')->count();
@@ -30,13 +36,17 @@ class DashboardController extends Controller
 
         return view('dashboard.admin', compact(
             'offers',
+             'ads',
             'reports',
             'offersValidated',
+           
             'offersRefused',
             'reportsPending',
             'reportsTreated'
         ));
     }
+
+    
     /**
      * Tableau de bord principal du prestataire
      */
@@ -96,6 +106,15 @@ class DashboardController extends Controller
     return view('dashboard.client', compact('reservations', 'reports'));
 }
 
+public function validerAd($id) {
+     $ad = Ad::findOrFail($id); $ad->update(['statut' => 'actif']);
+      return redirect()->back()->with('success', 'Publicité validée et publiée !'); 
+    } 
+
+      public function refuserAd($id) { 
+        $ad = Ad::findOrFail($id); $ad->update(['statut' => 'archive']); 
+        return redirect()->back()->with('error', 'Publicité refusée.'); 
+    }
 }
 
 

@@ -16,6 +16,7 @@ class Ad extends Model
         'description',
         'image',
         'link',
+        'statut', // ✅ important
     ];
 
     // Relation avec l’utilisateur

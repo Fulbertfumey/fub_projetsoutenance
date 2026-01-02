@@ -15,7 +15,11 @@ return new class extends Migration
         Schema::create('ads', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('titre');
+            $table->enum('plan', ['Basique', 'Premium', 'Entreprise'])->default('Basique');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('image')->nullable();
+            $table->string('link')->nullable();
             $table->text('contenu')->nullable();
             $table->unsignedInteger('vues')->default(0);
             $table->unsignedInteger('clics')->default(0);

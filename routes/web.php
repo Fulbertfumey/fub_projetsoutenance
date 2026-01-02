@@ -97,6 +97,9 @@ Route::middleware(['auth','role:admin'])->group(function(){
 
     Route::get('/admin/signalements',[ReportController::class,'adminIndex'])->name('admin.reports');
     Route::post('/admin/signalements/{report}/traiter',[ReportController::class,'treat'])->name('admin.reports.treat');
+
+    Route::post('/admin/ads/{id}/valider', [DashboardController::class, 'validerAd'])->name('admin.ads.valider'); 
+    Route::post('/admin/ads/{id}/refuser', [DashboardController::class, 'refuserAd'])->name('admin.ads.refuser');
 });
 
 // Dashboards clients/prestataires
@@ -115,3 +118,4 @@ Route::post('/admin/connexion', [\App\Http\Controllers\Auth\AdminLoginController
 
 
 Route::middleware(['auth','role:prestataire'])->get('/dashboard/prestataire', [DashboardController::class, 'prestataire'])->name('dashboard.prestataire');
+

@@ -652,6 +652,25 @@ h2 [role="img"], h4 [role="img"] {
             </tbody>
         </table>
     @endif
+<!-- pour filter et voir les pub depuis dashboard -->
+  @foreach($ads as $ad)
+    <h3>{{ $ad->title }}</h3>
+    <p>{{ $ad->description }}</p>
+    <span>Statut : {{ $ad->statut }}</span>
+
+    @if($ad->statut === 'brouillon')
+        <form action="{{ route('admin.ads.valider', $ad->id) }}" method="POST">
+            @csrf
+            <button type="submit">✅ Valider</button>
+        </form>
+
+        <form action="{{ route('admin.ads.refuser', $ad->id) }}" method="POST">
+            @csrf
+            <button type="submit">❌ Refuser</button>
+        </form>
+    @endif
+@endforeach
+
 
     <!-- Tableau des signalements -->
     <h4 class="mt-5">⚠️ Signalements</h4>
