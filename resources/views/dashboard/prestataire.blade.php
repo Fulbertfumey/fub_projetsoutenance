@@ -369,7 +369,7 @@
             <li>
                 Offre : {{ $reservation->offer->titre }} | 
                 Client : {{ $reservation->client->nom }} | 
-                Statut : {{ $reservation->statut }}
+               
                 <form method="POST" action="{{ route('conversations.start', $reservation) }}">
                     @csrf
                     <button type="submit">💬 Démarrer la conversation</button>
@@ -389,13 +389,13 @@
         @endforeach
     </ul>
 
-    <h3>Signalements</h3>
+    <!-- <h3>Signalements</h3>
     <ul>
         @foreach($reports as $report)
             <li>
                 Signalement #{{ $report->id }} - Motif : {{ $report->motif }} - Statut : {{ $report->statut }}
             </li>
         @endforeach
-    </ul>
+    </ul> -->
 </div>
 @endsection

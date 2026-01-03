@@ -352,7 +352,7 @@
                 <tr>
                     <th>Offre</th>
                     <th>Prestataire</th>
-                    <th>Statut</th>
+                   
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -360,8 +360,8 @@
                 @foreach($reservations as $reservation)
                 <tr>
                     <td>{{ $reservation->offer->titre }}</td>
-                    <td>{{ $reservation->offer->user->name }}</td>
-                    <td>{{ ucfirst($reservation->statut) }}</td>
+                    <td>{{ $reservation->offer->user->nom }}</td>
+                    
                     <td>
                         <!-- Bouton démarrer une discussion -->
                         <form action="{{ route('conversations.start', $reservation) }}" method="POST" style="display:inline;">
