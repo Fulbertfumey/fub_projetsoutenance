@@ -625,6 +625,8 @@
             MikiMultiService vous propose trois niveaux de visibilité pour mettre en avant vos services auprès des clients.
             Sélectionnez le plan qui correspond le mieux à vos besoins.
         </p>
+        
+        
     </div>
     
     <div class="pricing-container">
@@ -803,6 +805,13 @@
                 </tbody>
             </table>
         </div>
+
+        <div style="margin-top:1.5rem;">
+                          <a href="{{ route('Home') }}">
+                              <button>⬅ Retour à l'accueil</button>
+                          </a>
+                     </div>
+                </div>
     </div>
 </div>
 @endsection

@@ -456,6 +456,11 @@ form label[for="motif"]:has(+ textarea:focus) {
                 Envoyer le signalement
             </button>
         </form>
+
+          <a href="{{ route('dashboard.client') }}">
+                              <button>⬅ dashboard</button>
+                          </a>
+                     </div>
     </div>
 </div>
 @endsection

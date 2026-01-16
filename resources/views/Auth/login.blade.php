@@ -33,7 +33,14 @@
                 <a class="auth-link" href="{{ route('password.reset') }}">Mot de passe oublié ?</a>
             </div>
         </form>
+        <div style="margin-top:1.5rem;">
+                          <a href="{{ route('Home') }}">
+                              <button>⬅ Retour à l'accueil</button>
+                          </a>
+                     </div>
+                </div>
     </div>
+
 </div>
 
 <style>

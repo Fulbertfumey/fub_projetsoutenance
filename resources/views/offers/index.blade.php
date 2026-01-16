@@ -546,6 +546,12 @@ div[style*="max-width:1000px"]::before {
                             <button>Voir détails</button>
                         </a>
                     </div>
+
+                      <div style="margin-top:1.5rem;">
+                          <a href="{{ route('Home') }}">
+                              <button>⬅ Retour à l'accueil</button>
+                          </a>
+                     </div>
                 </div>
             @endforeach
         </div>

@@ -694,4 +694,490 @@
         </div>
     </section>
 </div>
+
+
+
+<script>
+    // ============================================
+    // 1. ANIMATIONS AU DÉFILEMENT (SCROLL ANIMATIONS)
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Observer pour les animations d'apparition
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    // Si c'est une carte de prix, ajouter une animation spéciale
+                    if (entry.target.classList.contains('pricing-card')) {
+                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.style.opacity = '1';
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observer les éléments à animer
+        document.querySelectorAll('.pricing-card, .category-card, .feature-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // ============================================
+        // 2. INTERACTIVITÉ DES CARTES DE PRIX
+        // ============================================
+        const pricingCards = document.querySelectorAll('.pricing-card');
+        
+        pricingCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02)';
+                this.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('hovered')) {
+                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.boxShadow = 'var(--shadow-lg)';
+                }
+            });
+
+            // Effet au clic
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('.btn')) {
+                    this.classList.toggle('hovered');
+                    
+                    // Remettre les autres cartes à l'état normal
+                    pricingCards.forEach(otherCard => {
+                        if (otherCard !== this) {
+                            otherCard.classList.remove('hovered');
+                            otherCard.style.transform = 'translateY(0) scale(1)';
+                            otherCard.style.boxShadow = 'var(--shadow-lg)';
+                        }
+                    });
+
+                    if (this.classList.contains('hovered')) {
+                        this.style.transform = 'translateY(-15px) scale(1.03)';
+                        this.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)';
+                        // Scroll doux vers la carte
+                        this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else {
+                        this.style.transform = 'translateY(0) scale(1)';
+                        this.style.boxShadow = 'var(--shadow-lg)';
+                    }
+                }
+            });
+        });
+
+        // ============================================
+        // 3. BOUTONS INTERACTIFS
+        // ============================================
+        const buttons = document.querySelectorAll('.btn');
+        
+        buttons.forEach(button => {
+            // Effet de pression
+            button.addEventListener('mousedown', function() {
+                this.style.transform = 'scale(0.95)';
+            });
+
+            button.addEventListener('mouseup', function() {
+                this.style.transform = 'scale(1)';
+            });
+
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+
+            // Animation au survol
+            button.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s ease';
+            });
+        });
+
+        // ============================================
+        // 4. COMPTEUR ANIMÉ (pour les statistiques)
+        // ============================================
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // Ajouter un élément de statistiques si nécessaire
+        const statsSection = document.createElement('div');
+        statsSection.className = 'stats-section';
+        statsSection.innerHTML = `
+            <div class="section-header">
+                <h2 class="section-title">📈 Notre impact</h2>
+                <p class="section-subtitle">Des chiffres qui parlent d'eux-mêmes</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" data-count="5000">0</div>
+                    <div class="stat-label">Utilisateurs satisfaits</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-count="1200">0</div>
+                    <div class="stat-label">Services réalisés</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-label">% de satisfaction</div>
+                </div>
+            </div>
+        `;
+
+        // Insérer après la section features
+        document.querySelector('.features-section').after(statsSection);
+
+        // ============================================
+        // 5. ANIMATION DES STATISTIQUES AU SCROLL
+        // ============================================
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.stat-number').forEach(stat => {
+                        const target = parseInt(stat.getAttribute('data-count'));
+                        animateCounter(stat, target);
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statsObserver.observe(statsSection);
+
+        // ============================================
+        // 6. EFFET DE TAPIS ROUlant SUR LES CATÉGORIES
+        // ============================================
+        const categoryCards = document.querySelectorAll('.category-card');
+        
+        categoryCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.category-icon');
+                icon.style.transform = 'scale(1.2) rotate(5deg)';
+                icon.style.transition = 'transform 0.3s ease';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.category-icon');
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            });
+
+            // Effet de clic
+            card.addEventListener('click', function() {
+                this.style.borderColor = 'var(--primary-color)';
+                this.style.boxShadow = '0 20px 40px rgba(37, 99, 235, 0.2)';
+                
+                // Retirer l'effet après 2 secondes
+                setTimeout(() => {
+                    this.style.boxShadow = 'var(--shadow-md)';
+                }, 2000);
+            });
+        });
+
+        // ============================================
+        // 7. MODAL D'INSCRIPTION RAPIDE
+        // ============================================
+        const quickSignupBtn = document.createElement('button');
+        quickSignupBtn.className = 'quick-signup-btn';
+        quickSignupBtn.innerHTML = '🚀 Démarrer maintenant';
+        quickSignupBtn.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: var(--shadow-xl);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        `;
+
+        document.body.appendChild(quickSignupBtn);
+
+        quickSignupBtn.addEventListener('click', function() {
+            // Animation du bouton
+            this.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+                // Redirection vers la page d'inscription
+                window.location.href = "{{ route('register') }}";
+            }, 300);
+        });
+
+        // Animation au survol du bouton flottant
+        quickSignupBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+            this.style.boxShadow = '0 25px 50px rgba(37, 99, 235, 0.3)';
+        });
+
+        quickSignupBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'var(--shadow-xl)';
+        });
+
+        // ============================================
+        // 8. ANIMATION DU TITRE HERO
+        // ============================================
+        const heroTitle = document.querySelector('.hero-title');
+        if (heroTitle) {
+            heroTitle.style.opacity = '0';
+            heroTitle.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                heroTitle.style.transition = 'all 1s ease-out';
+                heroTitle.style.opacity = '1';
+                heroTitle.style.transform = 'translateY(0)';
+            }, 300);
+        }
+
+        // ============================================
+        // 9. SYSTÈME DE NOTIFICATION
+        // ============================================
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button class="notification-close">×</button>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--success-color)' : 'var(--primary-color)'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow-lg);
+                z-index: 1001;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                min-width: 300px;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animation d'entrée
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            // Bouton de fermeture
+            notification.querySelector('.notification-close').addEventListener('click', function() {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            });
+            
+            // Fermeture automatique
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        // Exemple de notification (à adapter selon vos besoins)
+        setTimeout(() => {
+            showNotification('🎉 Bienvenue sur MikiMultiService ! Découvrez nos offres exclusives.', 'success');
+        }, 2000);
+
+        // ============================================
+        // 10. EFFET DE GLOW AU SURVOL DES ICÔNES
+        // ============================================
+        const icons = document.querySelectorAll('.category-icon, .feature-icon');
+        
+        icons.forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                this.style.textShadow = '0 0 20px rgba(37, 99, 235, 0.5)';
+            });
+            
+            icon.addEventListener('mouseleave', function() {
+                this.style.textShadow = 'none';
+            });
+        });
+
+        // ============================================
+        // 11. ANIMATION DU SCROLL
+        // ============================================
+        let lastScroll = 0;
+        const navbar = document.querySelector('.navbar') || document.createElement('div');
+        
+        window.addEventListener('scroll', function() {
+            const currentScroll = window.pageYOffset;
+            
+            // Effet de réduction du header au scroll
+            if (currentScroll > 100) {
+                document.querySelector('.hero-section')?.style.setProperty('padding', '3rem 1rem');
+                quickSignupBtn.style.bottom = '20px';
+                quickSignupBtn.style.right = '20px';
+                quickSignupBtn.style.padding = '12px 20px';
+            } else {
+                document.querySelector('.hero-section')?.style.setProperty('padding', '5rem 1rem');
+                quickSignupBtn.style.bottom = '30px';
+                quickSignupBtn.style.right = '30px';
+                quickSignupBtn.style.padding = '15px 25px';
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // ============================================
+        // 12. ANIMATION DE CHARGEMENT
+        // ============================================
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    });
+
+    // ============================================
+    // 13. STYLES ADDITIONNELS POUR LES ANIMATIONS
+    // ============================================
+    const style = document.createElement('style');
+    style.textContent = `
+        /* Styles pour les notifications */
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            margin-left: 15px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        
+        .notification-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Styles pour les statistiques */
+        .stats-section {
+            background: var(--light-bg);
+            padding: 4rem 1rem;
+            width: 100%;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 0 1rem;
+        }
+        
+        .stat-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--gray-600);
+            font-size: 1.125rem;
+        }
+        
+        /* Animation pour les cartes au scroll */
+        .animated {
+            animation: fadeUp 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Effet de pulse pour les boutons CTA */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .cta-section .btn-primary {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Responsive pour le bouton flottant */
+        @media (max-width: 768px) {
+            .quick-signup-btn {
+                bottom: 20px !important;
+                right: 20px !important;
+                padding: 12px 20px !important;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+    `;
+    
+    document.head.appendChild(style);
+</script>
+
 @endsection

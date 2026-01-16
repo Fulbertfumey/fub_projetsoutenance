@@ -21,6 +21,9 @@ Route::post('/contact', function (\Illuminate\Http\Request $request) {
     return back()->with('success', 'Votre message a été envoyé avec succès !');
 })->name('contact');
 
+
+
+
 // Auth
 Route::get('/connexion',[LoginController::class,'showLogin'])->name('login');
 Route::post('/connexion',[LoginController::class,'login']);

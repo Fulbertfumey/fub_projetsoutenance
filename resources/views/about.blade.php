@@ -478,6 +478,17 @@ section[style*="margin-top:2rem"]:hover h3::before {
     50% { transform: scale(1.3); }
     100% { transform: scale(1); }
 }
+
+section {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 30px;
+}
+section h2 {
+  color: #0073e6;
+}
+
 </style>
 <div style="max-width:900px; margin:auto;">
     <h2 style="text-align:center;">À propos de MultiService Pro</h2>
@@ -514,6 +525,27 @@ section[style*="margin-top:2rem"]:hover h3::before {
             <li>🚨 Signalement intégré pour garantir la qualité</li>
         </ul>
     </section>
+
+   
+<div class="cont">
+    
+    <!-- Nouvelle section Politique de confidentialité -->
+    <section class="mt-5">
+        <h2>Politique de confidentialité</h2>
+        <p>
+            Chez MikiMultiService, nous respectons la confidentialité de vos données.
+            Les informations collectées (nom, email, téléphone) sont utilisées uniquement
+            pour le traitement de vos commandes et la communication avec vous.
+        </p>
+        <p>
+            Vos données ne sont jamais vendues à des tiers. Elles sont protégées par des
+            mesures de sécurité adaptées. Vous pouvez à tout moment demander la modification
+            ou la suppression de vos informations en nous contactant à :
+            <a href="mailto:fumeyfulbert@gmail.com">contact@mikimultiservice.com</a>.
+        </p>
+    </section>
+</div>
+
 
     <section style="margin-top:2rem; text-align:center;">
         <h3>🤝 Rejoignez-nous dès aujourd’hui</h3>

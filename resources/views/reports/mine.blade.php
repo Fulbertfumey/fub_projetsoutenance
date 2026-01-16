@@ -591,5 +591,10 @@ table[style*="width:100%; border-collapse:collapse"]::before {
     @else
         <p style="text-align:center; margin-top:2rem;">Vous n’avez fait aucun signalement pour le moment.</p>
     @endif
+
+      <a href="{{ route('dashboard.client') }}">
+                              <button>⬅ dashboard</button>
+                          </a>
+                     </div>
 </div>
 @endsection

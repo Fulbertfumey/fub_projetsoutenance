@@ -50,4 +50,11 @@
 @else
     <p style="text-align:center;">Aucune publicité publiée pour le moment.</p>
 @endif
+
+<div style="margin-top:1.5rem;">
+                          <a href="{{ route('Home') }}">
+                              <button>⬅ Retour à l'accueil</button>
+                          </a>
+                     </div>
+                </div>
 @endsection

@@ -373,5 +373,11 @@
 
         <button type="submit">Publier l’offre</button>
     </form>
+
+     <div style="margin-top:1.5rem;">
+                          <a href="{{ route('dashboard.prestataire') }}">
+                              <button>⬅ dashboard</button>
+                          </a>
+                     </div>
 </div>
 @endsection

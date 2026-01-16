@@ -549,7 +549,7 @@
 }
 </style>
 <div class="container">
-    <h2>Conversation #{{ $conversation->id }}</h2>
+    <h2>Conversation :{{ $conversation->id }}</h2>
 
     <div class="messages">
         @foreach($messages as $message)
@@ -568,5 +568,12 @@
         <textarea name="contenu" rows="3" required></textarea>
         <button type="submit">Envoyer</button>
     </form>
+
+    
+                      <div style="margin-top:1.5rem;">
+                          <a href="{{ route('dashboard.prestataire') }}">
+                              <button>⬅ dashboard</button>
+                          </a>
+                     </div>
 </div>
 @endsection
