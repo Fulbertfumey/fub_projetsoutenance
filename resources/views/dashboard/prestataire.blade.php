@@ -39,7 +39,7 @@
 }
 
 .container h2::before {
-    content: "📊";
+    content: "";
     margin-right: 10px;
     font-size: 1.8rem;
 }
@@ -159,7 +159,7 @@
 }
 
 .container h3:contains("Mes Offres") + ul li::before {
-    content: "📋";
+    content: "";
     margin-right: 10px;
     font-size: 1.1rem;
 }
@@ -187,7 +187,7 @@
 }
 
 .container h3:contains("Réservations Reçues") + ul li::before {
-    content: "📅";
+    content: "";
     margin-right: 10px;
     font-size: 1.1rem;
 }
@@ -234,7 +234,7 @@
 }
 
 .container h3:contains("Conversations") + ul li a::before {
-    content: "💬";
+    content: "";
     font-size: 1.1rem;
 }
 
@@ -343,7 +343,7 @@
 }
 </style>
 <div class="container">
-    <h2>📊 Tableau de bord Prestataire</h2>
+    <h2>Tableau de bord Prestataire</h2>
 
     <h3>Mes Statistiques</h3>
     <ul>
@@ -356,7 +356,7 @@
     </ul>
 
     <h3>Mes Offres</h3>
-    <a href="{{ route('offers.create') }}" class="btn btn-primary">➕ Nouvelle Offre</a>
+    <a href="{{ route('offers.create') }}" class="btn btn-primary"> Nouvelle Offre</a>
     <ul>
         @foreach($offers as $offer)
             <li>{{ $offer->titre }} ({{ $offer->statut }})</li>
@@ -372,7 +372,7 @@
                
                 <form method="POST" action="{{ route('conversations.start', $reservation) }}">
                     @csrf
-                    <button type="submit">💬 Démarrer la conversation</button>
+                    <button type="submit"> Démarrer la conversation</button>
                 </form>
             </li>
         @endforeach

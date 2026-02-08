@@ -502,10 +502,10 @@
         </p>
         <div class="hero-actions">
             <a href="{{ route('offers.index') }}" class="btn btn-primary">
-                📋 Parcourir les offres
+                 Parcourir les offres
             </a>
             <a href="{{ route('register') }}" class="btn btn-secondary">
-                👤 Créer un compte
+                 Créer un compte
             </a>
         </div>
     </section>
@@ -514,7 +514,7 @@
     <section class="promotion-section">
         <div class="section-header">
             <h2 class="section-title">
-                <span>📣</span> Promouvoir votre marque
+                <span><i class="fa-solid fa-megaphone"></i></span> Promouvoir votre marque
             </h2>
             <p class="section-subtitle">
                 Augmentez votre visibilité grâce à nos plans de promotion adaptés à tous les budgets.
@@ -585,11 +585,11 @@
         <div class="section-header">
             <div class="hero-actions">
                 <a href="{{ route('promotions.subscribe') }}" class="btn btn-primary">
-                    📊 Découvrir tous les plans
+                     Découvrir tous les plans
                 </a>
                 <a
                  href="{{ route('ads.index') }}" class="btn btn-success">
-                    🚀Voir les publicités
+                    Voir les publicités
                 </a>
             </div>
         </div>
@@ -606,7 +606,7 @@
         
         <div class="categories-grid">
             <div class="category-card">
-                <div class="category-icon">🏠</div>
+                <div class="category-icon"></div>
                 <h3 class="category-title">Services domestiques</h3>
                 <p class="category-description">
                     Entretien ménager, jardinage, repassage, garde d'enfants, aide aux personnes âgées. 
@@ -615,7 +615,7 @@
             </div>
             
             <div class="category-card">
-                <div class="category-icon">🎓</div>
+                <div class="category-icon"></div>
                 <h3 class="category-title">Services étudiants</h3>
                 <p class="category-description">
                     Cours particuliers, aide aux devoirs, soutien scolaire, assistance informatique.
@@ -624,7 +624,7 @@
             </div>
             
             <div class="category-card">
-                <div class="category-icon">🔧</div>
+                <div class="category-icon"></div>
                 <h3 class="category-title">Services techniques</h3>
                 <p class="category-description">
                     Plomberie, électricité, réparations, dépannage urgent, installation.
@@ -645,7 +645,7 @@
         
         <div class="features-list">
             <div class="feature-item">
-                <div class="feature-icon">✅</div>
+                <!-- <div class="feature-icon"></div> -->
                 <div class="feature-content">
                     <h4>Validation rigoureuse</h4>
                     <p>Chaque publication et prestataire est vérifié et validé par notre équipe pour garantir qualité et sécurité.</p>
@@ -653,7 +653,7 @@
             </div>
             
             <div class="feature-item">
-                <div class="feature-icon">⚡</div>
+                <!-- <div class="feature-icon"></div> -->
                 <div class="feature-content">
                     <h4>Réservation instantanée</h4>
                     <p>Réservez un service en quelques clics avec notre interface intuitive et rapide, 24h/24 et 7j/7.</p>
@@ -661,7 +661,7 @@
             </div>
             
             <div class="feature-item">
-                <div class="feature-icon">📊</div>
+                <!-- <div class="feature-icon"></div> -->
                 <div class="feature-content">
                     <h4>Suivi en temps réel</h4>
                     <p>Gérez vos réservations, demandes et paiements en temps réel depuis votre espace personnel sécurisé.</p>
@@ -669,7 +669,7 @@
             </div>
             
             <div class="feature-item">
-                <div class="feature-icon">🛡️</div>
+                <!-- <div class="feature-icon"></div> -->
                 <div class="feature-content">
                     <h4>Sécurité garantie</h4>
                     <p>Système de signalement et d'évaluation pour garantir la qualité et la sécurité de tous les services.</p>
@@ -686,10 +686,10 @@
         </p>
         <div class="cta-actions">
             <a href="{{ route('register') }}" class="btn btn-primary">
-                👤 Créer un compte gratuit
+                 Créer un compte gratuit
             </a>
             <a href="{{ route('offers.create') }}" class="btn btn-secondary">
-                📝 Publier une offre
+                 Publier une offre
             </a>
         </div>
     </section>
@@ -821,7 +821,7 @@
         statsSection.className = 'stats-section';
         statsSection.innerHTML = `
             <div class="section-header">
-                <h2 class="section-title">📈 Notre impact</h2>
+                <h2 class="section-title"> Notre impact</h2>
                 <p class="section-subtitle">Des chiffres qui parlent d'eux-mêmes</p>
             </div>
             <div class="stats-grid">
@@ -894,7 +894,7 @@
         // ============================================
         const quickSignupBtn = document.createElement('button');
         quickSignupBtn.className = 'quick-signup-btn';
-        quickSignupBtn.innerHTML = '🚀 Démarrer maintenant';
+        quickSignupBtn.innerHTML = ' Démarrer maintenant';
         quickSignupBtn.style.cssText = `
             position: fixed;
             bottom: 30px;
@@ -1004,7 +1004,7 @@
 
         // Exemple de notification (à adapter selon vos besoins)
         setTimeout(() => {
-            showNotification('🎉 Bienvenue sur MikiMultiService ! Découvrez nos offres exclusives.', 'success');
+            showNotification(' Bienvenue sur MikiMultiService ! Découvrez nos offres exclusives.', 'success');
         }, 2000);
 
         // ============================================

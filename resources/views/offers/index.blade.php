@@ -84,7 +84,7 @@ h2[style*="text-align:center"]::after {
 }
 
 h2[style*="text-align:center"]::before {
-    content: '📋';
+    content: '';
     display: inline-block;
     margin-right: 15px;
     animation: listIcon 2s ease-in-out infinite;
@@ -132,7 +132,7 @@ div[style*="background:#d4edda"] {
 }
 
 div[style*="background:#d4edda"]::before {
-    content: '✅';
+    content: '';
     position: absolute;
     right: 20px;
     top: 50%;
@@ -280,7 +280,7 @@ div[style*="display:grid"] > div[style*="border:1px solid #ddd"] p[style*="font-
 }
 
 div[style*="display:grid"] > div[style*="border:1px solid #ddd"] p[style*="font-size:0.9rem"]::before {
-    content: '👤';
+    content: '';
     font-size: 1rem;
 }
 
@@ -340,7 +340,7 @@ div[style*="display:grid"] > div[style*="border:1px solid #ddd"] a[href*="offers
 }
 
 div[style*="display:grid"] > div[style*="border:1px solid #ddd"] a[href*="offers.show"] button::after {
-    content: '🔍';
+    content: '';
     font-size: 1.1rem;
     transition: var(--offers-transition);
 }
@@ -418,7 +418,7 @@ p[style*="text-align:center"] {
 }
 
 p[style*="text-align:center"]::before {
-    content: '📭';
+    content: '';
     display: block;
     font-size: 3rem;
     margin-bottom: 20px;
@@ -517,7 +517,7 @@ div[style*="max-width:1000px"]::before {
 }
 </style>
 <div style="max-width:1000px; margin:auto;">
-    <h2 style="text-align:center;">📋 Liste des offres disponibles</h2>
+    <h2 style="text-align:center;"> Liste des offres disponibles</h2>
 
     @if(session('success'))
         <div style="background:#d4edda; color:#155724; padding:1rem; border-radius:6px; margin-bottom:1rem;">
@@ -549,7 +549,7 @@ div[style*="max-width:1000px"]::before {
 
                       <div style="margin-top:1.5rem;">
                           <a href="{{ route('Home') }}">
-                              <button>⬅ Retour à l'accueil</button>
+                              <button> Retour à l'accueil</button>
                           </a>
                      </div>
                 </div>

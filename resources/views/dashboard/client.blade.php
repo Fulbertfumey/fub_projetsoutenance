@@ -26,7 +26,7 @@
 }
 
 .container h2::before {
-    content: "📅";
+    content: "";
     margin-right: 12px;
     font-size: 1.6rem;
 }
@@ -309,7 +309,7 @@
 }
 </style>
 <div class="container">
-    <h2>📅 Mon Dashboard Client</h2>
+    <h2> Mon Dashboard Client</h2>
 
     <!-- Statistiques rapides -->
     <div class="row mb-4">
@@ -344,7 +344,7 @@
         <div class="alert alert-info text-center">
             <h4>Vous n’avez pas encore réservé d’offre.</h4>
             <p>Commencez dès maintenant en parcourant les offres disponibles.</p>
-            <a href="{{ route('offers.index') }}" class="btn btn-primary">🔍 Parcourir les offres</a>
+            <a href="{{ route('offers.index') }}" class="btn btn-primary"> Parcourir les offres</a>
         </div>
     @else
         <table class="table table-striped">
@@ -366,11 +366,11 @@
                         <!-- Bouton démarrer une discussion -->
                         <form action="{{ route('conversations.start', $reservation) }}" method="POST" style="display:inline;">
                             @csrf
-                            <button type="submit" class="btn btn-primary btn-sm">💬 Démarrer une discussion</button>
+                            <button type="submit" class="btn btn-primary btn-sm"> Démarrer une discussion</button>
                         </form>
 
                         <!-- Bouton signaler -->
-                        <a href="{{ route('reports.create', $reservation) }}" class="btn btn-danger btn-sm">⚠️ Signaler</a>
+                        <a href="{{ route('reports.create', $reservation) }}" class="btn btn-danger btn-sm"> Signaler</a>
                     </td>
                 </tr>
                 @endforeach

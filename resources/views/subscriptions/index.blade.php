@@ -619,7 +619,7 @@
 <div class="pricing-page">
     <div class="pricing-header">
         <h1 class="pricing-title">
-            <span>📣</span> Choisissez votre plan de promotion
+            <span></span> Choisissez votre plan de promotion
         </h1>
         <p class="pricing-subtitle">
             MikiMultiService vous propose trois niveaux de visibilité pour mettre en avant vos services auprès des clients.
@@ -663,7 +663,7 @@
                 </ul>
                 
                 <a href="{{ route('ads.create', ['plan' => 'basique']) }}" class="plan-button secondary">
-                    <span>🚀</span> Choisir ce plan
+                    <span></span> Choisir ce plan
                 </a>
             </div>
             
@@ -704,7 +704,7 @@
                 </ul>
                 
                 <a href="{{ route('ads.create', ['plan' => 'premium']) }}" class="plan-button">
-                    <span>⭐</span> Choisir ce plan
+                    <span></span> Choisir ce plan
                 </a>
             </div>
             
@@ -748,7 +748,7 @@
                 </ul>
                 
                 <a href="{{ route('ads.create', ['plan' => 'entreprise']) }}" class="plan-button secondary">
-                    <span>🏢</span> Choisir ce plan
+                    <span></span> Choisir ce plan
                 </a>
             </div>
         </div>
@@ -808,7 +808,7 @@
 
         <div style="margin-top:1.5rem;">
                           <a href="{{ route('Home') }}">
-                              <button>⬅ Retour à l'accueil</button>
+                              <button> Retour à l'accueil</button>
                           </a>
                      </div>
                 </div>

@@ -95,7 +95,7 @@ li:has(.unread) {
 
 /* Numéro de conversation */
 li a:before {
-    content: "💬";
+    content: "";
     margin-right: 0.75rem;
     font-size: 1.25rem;
     opacity: 0.7;
@@ -440,7 +440,7 @@ li:not(:last-child)::after {
 </style>
 @section('content')
 <div class="container">
-    <h2>💬 Mes Conversations</h2>
+    <h2> Mes Conversations</h2>
     <ul>
         @forelse($conversations as $conversation)
             <li>

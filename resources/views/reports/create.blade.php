@@ -80,7 +80,7 @@ form label[for="motif"] {
 }
 
 form label[for="motif"]::before {
-    content: '⚠️';
+    content: '';
     position: absolute;
     left: 0;
     top: 50%;
@@ -182,7 +182,7 @@ button[type="submit"]:disabled {
 
 /* Icône dans le bouton */
 button[type="submit"]::before {
-    content: '🚨';
+    content: '';
     font-size: 1.1em;
 }
 
@@ -441,7 +441,7 @@ form label[for="motif"]:has(+ textarea:focus) {
 }
 </style>
 <div style="max-width:800px; margin:auto;">
-    <h2 style="text-align:center;">📢 Signaler une offre</h2>
+    <h2 style="text-align:center;"> Signaler une offre</h2>
 
     <div style="border:1px solid #ddd; border-radius:8px; padding:2rem; background:#fff; margin-top:1.5rem;">
         <p><strong>Offre :</strong> {{ $reservation->offer->titre }}</p>
@@ -458,7 +458,7 @@ form label[for="motif"]:has(+ textarea:focus) {
         </form>
 
           <a href="{{ route('dashboard.client') }}">
-                              <button>⬅ dashboard</button>
+                              <button>dashboard</button>
                           </a>
                      </div>
     </div>

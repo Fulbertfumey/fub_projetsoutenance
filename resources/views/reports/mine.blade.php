@@ -206,7 +206,7 @@ p[style*="text-align:center; margin-top:2rem"] {
 }
 
 p[style*="text-align:center; margin-top:2rem"]::before {
-    content: '📭';
+    content: '';
     font-size: 2rem;
     display: block;
     margin-bottom: 1rem;
@@ -537,7 +537,7 @@ table[style*="width:100%; border-collapse:collapse"]::before {
 }
 
 .sortable::after {
-    content: '↕️';
+    content: '';
     position: absolute;
     right: 0.5rem;
     top: 50%;
@@ -547,7 +547,7 @@ table[style*="width:100%; border-collapse:collapse"]::before {
 }
 </style>
 <div style="max-width:900px; margin:auto;">
-    <h2 style="text-align:center;">📢 Mes signalements</h2>
+    <h2 style="text-align:center;"> Mes signalements</h2>
 
     @if(session('status'))
         <div style="background:#d4edda; color:#155724; padding:1rem; border-radius:6px; margin-bottom:1rem;">
@@ -593,7 +593,7 @@ table[style*="width:100%; border-collapse:collapse"]::before {
     @endif
 
       <a href="{{ route('dashboard.client') }}">
-                              <button>⬅ dashboard</button>
+                              <button> dashboard</button>
                           </a>
                      </div>
 </div>

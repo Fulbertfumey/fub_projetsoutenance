@@ -331,7 +331,7 @@
 }
 </style>
 <div style="max-width:700px; margin:auto;">
-    <h2 style="text-align:center;">➕ Publier une nouvelle offre</h2>
+    <h2 style="text-align:center;"> Publier une nouvelle offre</h2>
 
     @if(session('status'))
         <div style="background:#d4edda; color:#155724; padding:1rem; border-radius:6px; margin-bottom:1rem;">
@@ -376,7 +376,7 @@
 
      <div style="margin-top:1.5rem;">
                           <a href="{{ route('dashboard.prestataire') }}">
-                              <button>⬅ dashboard</button>
+                              <button> dashboard</button>
                           </a>
                      </div>
 </div>

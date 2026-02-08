@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{{ config('app.name') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/animations.min.css">
 
     <!-- Style inspiré du template MikiMultiservice -->
     <style>

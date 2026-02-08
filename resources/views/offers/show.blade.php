@@ -83,7 +83,7 @@ h2[style*="text-align:center"]::after {
 }
 
 h2[style*="text-align:center"]::before {
-    content: '📌';
+    content: '';
     display: inline-block;
     margin-right: 15px;
     animation: pinIcon 2s ease-in-out infinite;
@@ -186,7 +186,7 @@ div[style*="border:1px solid #ddd"] p:first-of-type strong {
 }
 
 div[style*="border:1px solid #ddd"] p:first-of-type::after {
-    content: '🏷️';
+    content: '';
     font-size: 1.2rem;
     animation: tagFloat 3s ease-in-out infinite;
 }
@@ -499,7 +499,7 @@ div[style*="border:1px solid #ddd"]::after {
 }
 </style>
 <div style="max-width:800px; margin:auto;">
-    <h2 style="text-align:center;">📌 Détails de l’offre</h2>
+    <h2 style="text-align:center;"> Détails de l’offre</h2>
 
     <div style="border:1px solid #ddd; border-radius:8px; padding:2rem; background:#fff; box-shadow:0 0 5px rgba(0,0,0,0.05); margin-top:1.5rem;">
         <h3>{{ $offer->title }}</h3>
@@ -538,7 +538,7 @@ div[style*="border:1px solid #ddd"]::after {
 
         <div style="margin-top:1.5rem;">
             <a href="{{ route('offers.index') }}">
-                <button>⬅ Retour à la liste</button>
+                <button> Retour à la liste</button>
             </a>
         </div>
     </div>

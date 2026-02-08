@@ -122,7 +122,7 @@
 }
 </style>
 <div class="container">
-    <h2>🔑 Connexion Admin</h2>
+    <h2> Connexion Admin</h2>
     <form method="POST" action="{{ route('admin.login') }}">
         @csrf
         <div class="mb-3">

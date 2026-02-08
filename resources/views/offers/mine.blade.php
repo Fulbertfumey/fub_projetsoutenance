@@ -329,7 +329,7 @@ p {
 }
 </style>
 <div class="container">
-    <h2>📋 Mes Offres</h2>
+    <h2> Mes Offres</h2>
 
     <!-- Bloc Statistiques -->
     <div class="row mb-4">
@@ -367,7 +367,7 @@ p {
         </div>
     </div>
 
-    <a href="{{ route('offers.create') }}" class="btn btn-primary mb-3">➕ Publier une nouvelle offre</a>
+    <a href="{{ route('offers.create') }}" class="btn btn-primary mb-3"> Publier une nouvelle offre</a>
 
     @if($offers->isEmpty())
         <p>Vous n’avez pas encore publié d’offre.</p>

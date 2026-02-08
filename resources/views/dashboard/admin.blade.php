@@ -581,7 +581,7 @@ h2 [role="img"], h4 [role="img"] {
 }
 </style>
 <div class="container">
-    <h2>⚙️ Dashboard Admin</h2>
+    <h2> Dashboard Admin</h2>
 
     <!-- Statistiques rapides -->
     <div class="row mb-4">
@@ -620,7 +620,7 @@ h2 [role="img"], h4 [role="img"] {
     </div>
 
     <!-- Tableau des offres en attente -->
-    <h4>📋 Offres en attente de validation</h4>
+    <h4>Offres en attente de validation</h4>
     @if($offers->isEmpty())
         <p>Aucune offre en attente.</p>
     @else
@@ -640,11 +640,11 @@ h2 [role="img"], h4 [role="img"] {
                     <td>
                         <form action="{{ route('admin.offers.validate', $offer) }}" method="POST" style="display:inline;">
                             @csrf
-                            <button type="submit" class="btn btn-success btn-sm">✅ Valider</button>
+                            <button type="submit" class="btn btn-success btn-sm"> Valider</button>
                         </form>
                         <form action="{{ route('admin.offers.refuse', $offer) }}" method="POST" style="display:inline;">
                             @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">❌ Refuser</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Refuser</button>
                         </form>
                     </td>
                 </tr>
@@ -661,19 +661,19 @@ h2 [role="img"], h4 [role="img"] {
     @if($ad->statut === 'brouillon')
         <form action="{{ route('admin.ads.valider', $ad->id) }}" method="POST">
             @csrf
-            <button type="submit">✅ Valider</button>
+            <button type="submit">Valider</button>
         </form>
 
         <form action="{{ route('admin.ads.refuser', $ad->id) }}" method="POST">
             @csrf
-            <button type="submit">❌ Refuser</button>
+            <button type="submit"> Refuser</button>
         </form>
     @endif
 @endforeach
 
 
     <!-- Tableau des signalements -->
-    <h4 class="mt-5">⚠️ Signalements</h4>
+    <h4 class="mt-5"> Signalements</h4>
     @if($reports->isEmpty())
         <p>Aucun signalement.</p>
     @else
@@ -699,7 +699,7 @@ h2 [role="img"], h4 [role="img"] {
                     <td>
                         <form action="{{ route('admin.reports.treat', $report) }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn btn-primary btn-sm">🔧 Traiter</button>
+                            <button type="submit" class="btn btn-primary btn-sm"> Traiter</button>
                         </form>
                     </td>
                 </tr>

@@ -153,10 +153,10 @@ section[style*="margin-top:2rem"] h3::after {
 }
 
 /* Icônes dans les titres */
-h3[style*="🌍"]::before { content: '🌍'; }
+/* h3[style*="🌍"]::before { content: '🌍'; }
 h3[style*="💡"]::before { content: '💡'; }
 h3[style*="🚀"]::before { content: '🚀'; }
-h3[style*="🤝"]::before { content: '🤝'; }
+h3[style*="🤝"]::before { content: '🤝'; } */
 
 section[style*="margin-top:2rem"] h3::before {
     font-size: 2rem;
@@ -254,11 +254,11 @@ ul[style*="list-style:none"] li::after {
     font-weight: bold;
 }
 
-li:contains("✔️")::after { content: '✅'; }
+/* li:contains("✔️")::after { content: '✅'; }
 li:contains("🔎")::after { content: '🔍'; }
 li:contains("📊")::after { content: '📈'; }
 li:contains("📩")::after { content: '💬'; }
-li:contains("🚨")::after { content: '🚨'; }
+li:contains("🚨")::after { content: '🚨'; } */
 
 ul[style*="list-style:none"] li::after {
     margin-left: auto;
@@ -494,7 +494,7 @@ section h2 {
     <h2 style="text-align:center;">À propos de MultiService Pro</h2>
 
     <section style="margin-top:2rem;">
-        <h3>🌍 Notre mission</h3>
+        <h3>Notre mission</h3>
         <p>
             MikiMultiService est une plateforme conçue pour connecter les <strong>clients</strong> et les <strong>prestataires</strong> 
             dans un environnement fiable et transparent. Notre objectif est de faciliter la recherche de services, 
@@ -503,26 +503,26 @@ section h2 {
     </section>
 
     <section style="margin-top:2rem;">
-        <h3>💡 Nos valeurs</h3>
+        <h3> Nos valeurs</h3>
         <ul style="list-style:none; padding:0;">
-            <li>✔️ Transparence et confiance entre utilisateurs</li>
-            <li>✔️ Simplicité d’utilisation et accessibilité</li>
-            <li>✔️ Sécurité grâce au système de signalement</li>
-            <li>✔️ Opportunités de promotion pour les prestataires</li>
+            <li> Transparence et confiance entre utilisateurs</li>
+            <li>Simplicité d’utilisation et accessibilité</li>
+            <li> Sécurité grâce au système de signalement</li>
+            <li> Opportunités de promotion pour les prestataires</li>
         </ul>
     </section>
 
     <section style="margin-top:2rem;">
-        <h3>🚀 Pourquoi nous choisir ?</h3>
+        <h3> Pourquoi nous choisir ?</h3>
         <p>
             Que vous soyez un <strong>client</strong> à la recherche d’un service fiable ou un <strong>prestataire</strong> 
             souhaitant promouvoir vos offres, MultiService Pro vous offre une solution complète :
         </p>
         <ul style="list-style:none; padding:0;">
-            <li>🔎 Recherche rapide et intuitive des services</li>
-            <li>📊 Outils de promotion adaptés à vos besoins</li>
-            <li>📩 Messagerie interne pour une communication fluide</li>
-            <li>🚨 Signalement intégré pour garantir la qualité</li>
+            <li> Recherche rapide et intuitive des services</li>
+            <li> Outils de promotion adaptés à vos besoins</li>
+            <li> Messagerie interne pour une communication fluide</li>
+            <li> Signalement intégré pour garantir la qualité</li>
         </ul>
     </section>
 
@@ -548,7 +548,7 @@ section h2 {
 
 
     <section style="margin-top:2rem; text-align:center;">
-        <h3>🤝 Rejoignez-nous dès aujourd’hui</h3>
+        <h3> Rejoignez-nous dès aujourd’hui</h3>
         <p>
             Inscrivez-vous gratuitement et découvrez une nouvelle façon de collaborer et de promouvoir vos services.
         </p>

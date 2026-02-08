@@ -627,7 +627,7 @@ section[style*="margin-top:2rem"]:has(form[action*="contact"]):hover h3::after {
 }
 
 section[style*="margin-top:2rem"]:has(form[action*="contact"]) h3::before {
-    content: '📝';
+    content: '';
     font-size: 2rem;
     animation: formIconFloat 3s ease-in-out infinite;
 }
@@ -818,7 +818,7 @@ form[method="POST"][action*="contact"] button[type="submit"]:active {
 }
 
 form[method="POST"][action*="contact"] button[type="submit"]::after {
-    content: '✈️';
+    content: '';
     font-size: 1.2rem;
     animation: sendFlight 2s ease-in-out infinite;
 }
@@ -1000,10 +1000,10 @@ form[method="POST"][action*="contact"] textarea:focus {
 }
 </style>
 <div style="max-width:800px; margin:auto;">
-    <h2 style="text-align:center;">📬 Contactez-nous</h2>
+    <h2 style="text-align:center;"> Contactez-nous</h2>
 
     <section style="margin-top:2rem;">
-        <h3>📞 Informations de contact</h3>
+        <h3> Informations de contact</h3>
         <p>
             Vous pouvez nous joindre via les moyens suivants :
         </p>
@@ -1015,7 +1015,7 @@ form[method="POST"][action*="contact"] textarea:focus {
     </section>
 
     <section style="margin-top:2rem;">
-        <h3>📝 Formulaire de contact</h3>
+        <h3> Formulaire de contact</h3>
         <form method="POST" action="{{ route('contact') }}" style="display:flex; flex-direction:column; gap:1rem;">
             @csrf
 
