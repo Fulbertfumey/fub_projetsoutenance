@@ -2,418 +2,152 @@
 
 @section('content')
 
-<style>
-    /* Styles professionnels et éthiques pour le tableau de bord des offres */
-.container {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    padding: 2rem 1rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
 
-/* Titre principal avec accessibilité */
-h2 {
-    color: #1a365d;
-    font-weight: 600;
-    font-size: 1.75rem;
-    margin-bottom: 2rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 2px solid #e2e8f0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
+<div class="min-h-screen bg-gray-50 py-12 px-6">
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Header & Call to Action -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+            <div>
+                <h2 class="text-3xl font-black text-gray-900 uppercase tracking-tight italic">Mes <span class="text-blue-600 font-bold">Offres</span></h2>
+                <p class="text-gray-500 mt-1 font-medium">Gérez la visibilité et suivez les performances de vos services.</p>
+            </div>
+            <a href="{{ route('offers.create') }}" class="group bg-blue-600 text-white px-6 py-3.5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-plus-circle text-lg group-hover:rotate-90 transition-transform"></i>
+                Publier une nouvelle offre
+            </a>
+        </div>
 
-/* Grille des statistiques */
-.row.mb-4 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-}
-
-/* Cartes de statistiques */
-.card {
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    background: white;
-    height: 100%;
-}
-
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-.card.text-center {
-    text-align: center;
-}
-
-.card-body {
-    padding: 1.5rem;
-}
-
-.card-title {
-    color: #4a5568;
-    font-size: 0.9rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.75rem;
-}
-
-.card-text {
-    color: #2d3748;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1;
-}
-
-/* Couleurs éthiques et accessibles */
-.bg-success {
-    background: linear-gradient(135deg, #38a169 0%, #2f855a 100%) !important;
-}
-
-.bg-warning {
-    background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%) !important;
-    color: #fff !important;
-}
-
-.bg-warning .card-text,
-.bg-warning .card-title {
-    color: #fff;
-}
-
-.bg-danger {
-    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%) !important;
-}
-
-.text-white {
-    color: #fff !important;
-}
-
-/* Bouton principal avec focus visible */
-.btn-primary {
-    background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-    border: none;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    font-weight: 500;
-    color: white;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 2px 4px rgba(66, 153, 225, 0.3);
-}
-
-.btn-primary:hover {
-    background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(66, 153, 225, 0.4);
-}
-
-.btn-primary:focus {
-    outline: 2px solid #4299e1;
-    outline-offset: 2px;
-}
-
-/* Tableau */
-.table {
-    width: 100%;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-    border-collapse: collapse;
-}
-
-.table thead {
-    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-}
-
-.table th {
-    color: #4a5568;
-    font-weight: 600;
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 1rem 1.5rem;
-    text-align: left;
-    border-bottom: 2px solid #e2e8f0;
-}
-
-.table tbody tr {
-    transition: background-color 0.2s ease;
-}
-
-.table tbody tr:hover {
-    background-color: #f8fafc;
-}
-
-.table td {
-    padding: 1rem 1.5rem;
-    color: #2d3748;
-    border-bottom: 1px solid #edf2f7;
-}
-
-/* Badges de statut */
-.badge {
-    display: inline-block;
-    padding: 0.35rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.bg-success {
-    background-color: #c6f6d5 !important;
-    color: #22543d !important;
-}
-
-.bg-warning {
-    background-color: #feebc8 !important;
-    color: #744210 !important;
-}
-
-.bg-danger {
-    background-color: #fed7d7 !important;
-    color: #742a2a !important;
-}
-
-/* Boutons d'action */
-.btn-info, .btn-danger {
-    border: none;
-    border-radius: 6px;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-decoration: none;
-}
-
-.btn-info {
-    background: #e6fffa;
-    color: #234e52;
-    margin-right: 0.5rem;
-}
-
-.btn-info:hover {
-    background: #b2f5ea;
-}
-
-.btn-danger {
-    background: #fed7d7;
-    color: #742a2a;
-}
-
-.btn-danger:hover {
-    background: #feb2b2;
-}
-
-.btn-sm {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.75rem;
-}
-
-/* Pagination (style générique pour les liens) */
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 2rem;
-    padding: 1rem;
-}
-
-.pagination a, .pagination span {
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    color: #4a5568;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
-.pagination a:hover {
-    background: #edf2f7;
-    color: #2d3748;
-}
-
-.pagination .active {
-    background: #4299e1;
-    color: white;
-}
-
-/* Message d'absence de données */
-p {
-    color: #718096;
-    font-style: italic;
-    text-align: center;
-    padding: 2rem;
-    background: #f8fafc;
-    border-radius: 8px;
-    border: 1px dashed #cbd5e0;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .container {
-        padding: 1rem;
-    }
-    
-    .row.mb-4 {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    .table {
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .table th,
-    .table td {
-        white-space: nowrap;
-    }
-}
-
-/* Animation d'entrée subtile */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.card, .table, .btn-primary {
-    animation: fadeIn 0.5s ease-out;
-}
-
-/* Support mode contraste élevé */
-@media (prefers-contrast: high) {
-    .card {
-        border: 2px solid #2d3748;
-    }
-    
-    .btn-primary, .btn-info, .btn-danger {
-        border: 2px solid currentColor;
-    }
-}
-
-/* Support mode réduit de mouvement */
-@media (prefers-reduced-motion: reduce) {
-    .card, .btn-primary, .table tbody tr {
-        transition: none;
-    }
-    
-    .card:hover {
-        transform: none;
-    }
-    
-    .btn-primary:hover {
-        transform: none;
-    }
-}
-</style>
-<div class="container">
-    <h2> Mes Offres</h2>
-
-    <!-- Bloc Statistiques -->
-    <div class="row mb-4">
-        <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h5 class="card-title">Total</h5>
-                    <p class="card-text">{{ $stats['total'] }}</p>
+        <!-- Bloc Statistiques (Grid Moderne) -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <!-- Total -->
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm flex flex-col items-center text-center">
+                <div class="w-12 h-12 bg-gray-50 text-gray-400 rounded-2xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-layer-group text-xl"></i>
                 </div>
+                <div class="text-3xl font-black text-gray-900">{{ $stats['total'] }}</div>
+                <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Total Offres</div>
+            </div>
+
+            <!-- Validées -->
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm flex flex-col items-center text-center ring-2 ring-green-500/5">
+                <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-check-double text-xl"></i>
+                </div>
+                <div class="text-3xl font-black text-green-600">{{ $stats['validees'] }}</div>
+                <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Offres Validées</div>
+            </div>
+
+            <!-- En Attente -->
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm flex flex-col items-center text-center">
+                <div class="w-12 h-12 bg-orange-50 text-orange-500 rounded-2xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-hourglass-half text-xl animate-pulse"></i>
+                </div>
+                <div class="text-3xl font-black text-orange-500">{{ $stats['en_attente'] }}</div>
+                <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">En attente</div>
+            </div>
+
+            <!-- Refusées -->
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm flex flex-col items-center text-center">
+                <div class="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-circle-xmark text-xl"></i>
+                </div>
+                <div class="text-3xl font-black text-red-500">{{ $stats['refusees'] }}</div>
+                <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Refusées</div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card text-center bg-success text-white">
-                <div class="card-body">
-                    <h5 class="card-title">Validées</h5>
-                    <p class="card-text">{{ $stats['validees'] }}</p>
+
+        <!-- Liste des Offres -->
+        <div class="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden mb-10">
+            @if($offers->isEmpty())
+                <div class="p-20 text-center">
+                    <div class="w-20 h-20 bg-gray-50 text-gray-300 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900">Aucune offre pour le moment</h3>
+                    <p class="text-gray-500 mt-2">Commencez par publier votre premier service pour attirer des clients.</p>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center bg-warning">
-                <div class="card-body">
-                    <h5 class="card-title">En attente</h5>
-                    <p class="card-text">{{ $stats['en_attente'] }}</p>
+            @else
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50/50">
+                                <th class="px-8 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest">Offre</th>
+                                <th class="px-8 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest">Catégorie</th>
+                                <th class="px-8 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest">Statut</th>
+                                <th class="px-8 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest">Performance</th>
+                                <th class="px-8 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            @foreach($offers as $offer)
+                            <tr class="hover:bg-gray-50 transition-colors group">
+                                <td class="px-8 py-6">
+                                    <div class="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{{ $offer->titre }}</div>
+                                    <div class="text-[10px] text-gray-400 italic mt-1 font-medium">Ajouté il y a 2 jours</div>
+                                </td>
+                                <td class="px-8 py-6">
+                                    <span class="text-xs font-bold text-gray-600 bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200">
+                                        {{ $offer->category->nom ?? 'Non définie' }}
+                                    </span>
+                                </td>
+                                <td class="px-8 py-6">
+                                    @if($offer->statut === 'valide')
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-black uppercase text-green-600 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">
+                                            <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                                            Validée
+                                        </span>
+                                    @elseif($offer->statut === 'en_attente')
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-black uppercase text-orange-500 bg-orange-50 px-3 py-1.5 rounded-full border border-orange-100">
+                                            <span class="w-1.5 h-1.5 bg-orange-400 rounded-full"></span>
+                                            En attente
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1.5 text-[10px] font-black uppercase text-red-500 bg-red-50 px-3 py-1.5 rounded-full border border-red-100">
+                                            Refusée
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="px-8 py-6">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex flex-col">
+                                            <span class="text-sm font-black text-gray-900">{{ $offer->vues }}</span>
+                                            <span class="text-[9px] font-bold text-gray-400 uppercase">Vues</span>
+                                        </div>
+                                        <div class="w-px h-6 bg-gray-100"></div>
+                                        <div class="flex flex-col">
+                                            <span class="text-sm font-black text-gray-900">{{ $offer->clics }}</span>
+                                            <span class="text-[9px] font-bold text-gray-400 uppercase">Clics</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-6 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <a href="{{ route('offers.show', $offer) }}" class="p-2.5 text-blue-600 bg-blue-50 rounded-xl hover:bg-blue-600 hover:text-white transition-all shadow-sm">
+                                            <i class="fa-solid fa-eye text-sm"></i>
+                                        </a>
+                                        <form action="{{ route('offers.destroy', $offer) }}" method="POST" class="inline" onsubmit="return confirm('Êtes-vous sûr ?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="p-2.5 text-red-500 bg-red-50 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-sm">
+                                                <i class="fa-solid fa-trash-can text-sm"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+            @endif
         </div>
-        <div class="col-md-3">
-            <div class="card text-center bg-danger text-white">
-                <div class="card-body">
-                    <h5 class="card-title">Refusées</h5>
-                    <p class="card-text">{{ $stats['refusees'] }}</p>
-                </div>
-            </div>
+
+        <!-- Pagination -->
+        <div class="mt-8 flex justify-center">
+            {{ $offers->links() }}
         </div>
+
     </div>
-
-    <a href="{{ route('offers.create') }}" class="btn btn-primary mb-3"> Publier une nouvelle offre</a>
-
-    @if($offers->isEmpty())
-        <p>Vous n’avez pas encore publié d’offre.</p>
-    @else
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Catégorie</th>
-                    <th>Statut</th>
-                    <th>Vues</th>
-                    <th>Clics</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($offers as $offer)
-                <tr>
-                    <td>{{ $offer->titre }}</td>
-                    <td>{{ $offer->category->nom ?? 'Non définie' }}</td>
-                    <td>
-                        @if($offer->statut === 'valide')
-                            <span class="badge bg-success">Validée</span>
-                        @elseif($offer->statut === 'en_attente')
-                            <span class="badge bg-warning">En attente</span>
-                        @else
-                            <span class="badge bg-danger">Refusée</span>
-                        @endif
-                    </td>
-                    <td>{{ $offer->vues }}</td>
-                    <td>{{ $offer->clics }}</td>
-                    <td>
-                        <a href="{{ route('offers.show', $offer) }}" class="btn btn-info btn-sm">Voir</a>
-                        <form action="{{ route('offers.destroy', $offer) }}" method="POST" style="display:inline;" 
-                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre ?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-
-        {{ $offers->links() }}
-    @endif
 </div>
 @endsection

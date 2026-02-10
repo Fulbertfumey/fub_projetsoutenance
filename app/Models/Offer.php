@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Offer extends Model {
-    protected $fillable = ['user_id','category_id','titre','description','prix','statut','vues','clics'];
+    protected $fillable = ['user_id','category_id','titre','description','prix','statut','vues','clics','image'];
     public function user(): BelongsTo { return $this->belongsTo(User::class); }
     public function category(): BelongsTo { return $this->belongsTo(Category::class); }
     public function reservations(): HasMany { return $this->hasMany(Reservation::class); }

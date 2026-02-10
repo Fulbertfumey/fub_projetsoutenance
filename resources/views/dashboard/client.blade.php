@@ -2,381 +2,134 @@
 
 @section('content')
 
-<style>
-/* === FOND ET CONTAINER === */
-.container {
-    background: white;
-    padding: 30px;
-    border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-    margin-top: 20px;
-    margin-bottom: 40px;
-    max-width: 1200px;
-}
 
-/* === TITRE PRINCIPAL === */
-.container h2 {
-    color: #2d3748;
-    font-size: 1.9rem;
-    font-weight: 700;
-    margin-bottom: 35px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #4299e1;
-    position: relative;
-}
+<div class="min-h-screen bg-gray-50 py-12 px-6">
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Header -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-black text-gray-900 uppercase tracking-tight italic">Mon Espace <span class="text-blue-600">Client</span></h2>
+            <p class="text-gray-500 mt-1 font-medium italic">Suivez vos réservations et gérez vos échanges avec les prestataires.</p>
+        </div>
 
-.container h2::before {
-    content: "";
-    margin-right: 12px;
-    font-size: 1.6rem;
-}
+        <!-- Statistiques (Cartes Modernes) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <!-- Active -->
+            <div class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm relative overflow-hidden group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-green-50 rounded-full group-hover:scale-110 transition-transform"></div>
+                <div class="relative z-10 flex items-center gap-5">
+                    <div class="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-xl shadow-inner">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-black text-gray-900">{{ $reservations->where('statut','en_attente')->count() }}</div>
+                        <div class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Réservations Actives</div>
+                    </div>
+                </div>
+            </div>
 
-/* === STATISTIQUES === */
-.row.mb-4 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 40px;
-}
+            <!-- Terminées -->
+            <div class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm relative overflow-hidden group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-blue-50 rounded-full group-hover:scale-110 transition-transform"></div>
+                <div class="relative z-10 flex items-center gap-5">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-xl shadow-inner">
+                        <i class="fa-solid fa-check-double"></i>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-black text-gray-900">{{ $reservations->where('statut','termine')->count() }}</div>
+                        <div class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Offres Terminées</div>
+                    </div>
+                </div>
+            </div>
 
-.row.mb-4 .card {
-    border: none;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.row.mb-4 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-}
-
-/* Cartes de stats */
-.row.mb-4 .bg-success {
-    background: #38a169 !important;
-}
-
-.row.mb-4 .bg-info {
-    background: #3182ce !important;
-}
-
-.row.mb-4 .bg-danger {
-    background: #e53e3e !important;
-}
-
-.row.mb-4 .card-body {
-    padding: 25px;
-    text-align: center;
-}
-
-.row.mb-4 .card-title {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.row.mb-4 .card-text {
-    font-size: 2.4rem;
-    font-weight: 700;
-    color: white;
-    margin: 0;
-}
-
-/* === MESSAGE D'ALERTE === */
-.container .alert-info {
-    background: #ebf8ff;
-    border: 1px solid #bee3f8;
-    border-radius: 12px;
-    padding: 30px;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.container .alert-info h4 {
-    color: #2d3748;
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.container .alert-info p {
-    color: #4a5568;
-    margin-bottom: 20px;
-    font-size: 1rem;
-}
-
-.container .alert-info .btn-primary {
-    background: #4299e1;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.container .alert-info .btn-primary:hover {
-    background: #3182ce;
-    transform: translateY(-2px);
-}
-
-/* === TABLEAU === */
-.container .table {
-    width: 100%;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    margin-bottom: 30px;
-}
-
-.container .table thead {
-    background: #f7fafc;
-}
-
-.container .table th {
-    padding: 16px 15px;
-    font-weight: 600;
-    color: #4a5568;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    border-bottom: 2px solid #e2e8f0;
-}
-
-.container .table tbody tr {
-    border-bottom: 1px solid #edf2f7;
-    transition: background-color 0.2s ease;
-}
-
-.container .table tbody tr:hover {
-    background-color: #f8fafc;
-}
-
-.container .table td {
-    padding: 14px 15px;
-    color: #2d3748;
-    font-size: 0.95rem;
-    vertical-align: middle;
-}
-
-/* Badge de statut */
-.container td:contains("en_attente"),
-.container td:contains("en attente") {
-    color: #d69e2e;
-    font-weight: 600;
-    background: #fefcbf;
-    padding: 4px 12px;
-    border-radius: 20px;
-    display: inline-block;
-}
-
-.container td:contains("terminé"),
-.container td:contains("termine") {
-    color: #38a169;
-    font-weight: 600;
-    background: #c6f6d5;
-    padding: 4px 12px;
-    border-radius: 20px;
-    display: inline-block;
-}
-
-/* === BOUTONS === */
-.container .btn {
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    border: none;
-    transition: all 0.2s ease;
-    margin-right: 8px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.container .btn-primary {
-    background: #4299e1;
-    color: white;
-}
-
-.container .btn-danger {
-    background: #e53e3e;
-    color: white;
-}
-
-.container .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.container .btn:active {
-    transform: translateY(0);
-}
-
-.container .btn-sm {
-    padding: 6px 14px;
-    font-size: 0.85rem;
-}
-
-/* === PAGINATION === */
-.container .pagination {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 30px;
-}
-
-.container .pagination .page-link {
-    padding: 8px 16px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    color: #4a5568;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.container .pagination .page-item.active .page-link {
-    background: #4299e1;
-    border-color: #4299e1;
-    color: white;
-}
-
-.container .pagination .page-link:hover {
-    background: #4299e1;
-    color: white;
-    border-color: #4299e1;
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 992px) {
-    .row.mb-4 {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 20px;
-        margin: 15px;
-    }
-    
-    .row.mb-4 {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .container h2 {
-        font-size: 1.6rem;
-        text-align: center;
-    }
-    
-    .container .btn {
-        margin-bottom: 8px;
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .container form[style*="display:inline"] {
-        display: block !important;
-        margin-bottom: 10px;
-    }
-    
-    .container .table {
-        display: block;
-        overflow-x: auto;
-    }
-}
-
-/* === ANIMATION SIMPLE === */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.row.mb-4 .card {
-    animation: fadeInUp 0.4s ease-out forwards;
-    animation-delay: calc(var(--i) * 0.1s);
-    opacity: 0;
-}
-</style>
-<div class="container">
-    <h2> Mon Dashboard Client</h2>
-
-    <!-- Statistiques rapides -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card text-white bg-success">
-                <div class="card-body">
-                    <h5 class="card-title">Réservations actives</h5>
-                    <p class="card-text">{{ $reservations->where('statut','en_attente')->count() }}</p>
+            <!-- Signalements -->
+            <div class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm relative overflow-hidden group">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-red-50 rounded-full group-hover:scale-110 transition-transform"></div>
+                <div class="relative z-10 flex items-center gap-5">
+                    <div class="w-14 h-14 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center text-xl shadow-inner">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-black text-gray-900">{{ $reports->count() }}</div>
+                        <div class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Signalements</div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-info">
-                <div class="card-body">
-                    <h5 class="card-title">Réservations terminées</h5>
-                    <p class="card-text">{{ $reservations->where('statut','termine')->count() }}</p>
-                </div>
+
+        <!-- Section Principale -->
+        <div class="bg-white rounded-[3rem] border border-gray-100 shadow-sm overflow-hidden">
+            <div class="px-10 py-8 border-b border-gray-50 flex items-center justify-between bg-gray-50/30">
+                <h3 class="text-lg font-black text-gray-900 uppercase italic tracking-widest">Historique de mes réservations</h3>
+                <span class="bg-white px-4 py-1.5 rounded-full border border-gray-200 text-[10px] font-bold text-gray-400 uppercase">{{ $reservations->count() }} au total</span>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-danger">
-                <div class="card-body">
-                    <h5 class="card-title">Signalements</h5>
-                    <p class="card-text">{{ $reports->count() }}</p>
+
+            @if($reservations->isEmpty())
+                <div class="p-20 text-center">
+                    <div class="w-24 h-24 bg-gray-50 text-gray-200 rounded-full flex items-center justify-center mx-auto mb-8 text-4xl">
+                        <i class="fa-solid fa-calendar-xmark"></i>
+                    </div>
+                    <h4 class="text-2xl font-black text-gray-900 uppercase italic">Aucune réservation trouvée</h4>
+                    <p class="text-gray-500 mt-3 font-medium max-w-md mx-auto">Vous n'avez pas encore réservé de service. Parcourez nos offres pour trouver le prestataire idéal.</p>
+                    <a href="{{ route('offers.index') }}" class="inline-flex mt-10 bg-blue-600 text-white px-10 py-4 rounded-2xl font-black uppercase tracking-[0.1em] hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/30 active:scale-95">
+                        <i class="fa-solid fa-magnifying-glass mr-2"></i> Parcourir les offres
+                    </a>
                 </div>
-            </div>
+            @else
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50/50">
+                                <th class="px-10 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest">Prestation / Offre</th>
+                                <th class="px-10 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest">Prestataire</th>
+                                <th class="px-10 py-5 text-[11px] font-black text-gray-400 uppercase tracking-widest text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            @foreach($reservations as $reservation)
+                            <tr class="hover:bg-gray-50/80 transition-all group">
+                                <td class="px-10 py-8">
+                                    <div class="font-black text-gray-900 group-hover:text-blue-600 transition-colors uppercase italic">{{ $reservation->offer->titre }}</div>
+                                    <div class="text-[10px] text-gray-400 font-bold uppercase mt-1 tracking-tighter">Réservé le {{ $reservation->created_at->format('d/m/Y') }}</div>
+                                </td>
+                                <td class="px-10 py-8">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 text-xs font-bold border border-gray-200">
+                                            {{ substr($reservation->offer->user->nom, 0, 1) }}
+                                        </div>
+                                        <div class="text-sm font-bold text-gray-700">{{ $reservation->offer->user->nom }}</div>
+                                    </div>
+                                </td>
+                                <td class="px-10 py-8 text-right">
+                                    <div class="flex items-center justify-end gap-3">
+                                        <!-- Bouton Discussion -->
+                                        <form action="{{ route('conversations.start', $reservation) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-900 transition-all shadow-lg shadow-blue-600/20 active:scale-95">
+                                                <i class="fa-solid fa-comment-dots text-xs"></i>
+                                                Discuter
+                                            </button>
+                                        </form>
+
+                                        <!-- Bouton Signaler -->
+                                        <a href="{{ route('reports.create', $reservation) }}" class="inline-flex items-center gap-2 bg-red-50 text-red-600 px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all active:scale-95">
+                                            <i class="fa-solid fa-triangle-exclamation text-xs"></i>
+                                            Signaler
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Footer Table / Pagination -->
+                <div class="px-10 py-8 bg-gray-50/30 border-t border-gray-100">
+                    {{ $reservations->links() }}
+                </div>
+            @endif
         </div>
     </div>
-
-    <!-- Tableau des réservations -->
-    @if($reservations->isEmpty())
-        <div class="alert alert-info text-center">
-            <h4>Vous n’avez pas encore réservé d’offre.</h4>
-            <p>Commencez dès maintenant en parcourant les offres disponibles.</p>
-            <a href="{{ route('offers.index') }}" class="btn btn-primary"> Parcourir les offres</a>
-        </div>
-    @else
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Offre</th>
-                    <th>Prestataire</th>
-                   
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($reservations as $reservation)
-                <tr>
-                    <td>{{ $reservation->offer->titre }}</td>
-                    <td>{{ $reservation->offer->user->nom }}</td>
-                    
-                    <td>
-                        <!-- Bouton démarrer une discussion -->
-                        <form action="{{ route('conversations.start', $reservation) }}" method="POST" style="display:inline;">
-                            @csrf
-                            <button type="submit" class="btn btn-primary btn-sm"> Démarrer une discussion</button>
-                        </form>
-
-                        <!-- Bouton signaler -->
-                        <a href="{{ route('reports.create', $reservation) }}" class="btn btn-danger btn-sm"> Signaler</a>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        {{ $reservations->links() }}
-    @endif
 </div>
 @endsection

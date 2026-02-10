@@ -35,9 +35,16 @@ class OfferController extends Controller {
             'description'=>'required|string',
             'prix'=>'nullable|numeric|min:0',
             'category_id'=>'required|exists:categories,id',
+            'image'=>'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         $data['user_id'] = Auth::id();
         $data['statut'] = 'en_attente';
+        
+        // Upload image if provided
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('offers', 'public');
+        }
+        
         Offer::create($data);
         return redirect()->route('offers.mine')->with('status','Offre soumise pour validation.');
     }

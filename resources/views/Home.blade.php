@@ -1,1183 +1,369 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-    /* Reset des marges et paddings pour occuper tout l'écran */
-    .home-container {
-        width: 97.6%;
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-    }
-    
-    /* Variables de design */
-    :root {
-        --primary-color: #2563eb;
-        --primary-dark: #1d4ed8;
-        --primary-light: #3b82f6;
-        --secondary-color: #7c3aed;
-        --secondary-dark: #6d28d9;
-        --dark-bg: #111827;
-        --light-bg: #f9fafb;
-        --white: #ffffff;
-        --gray-100: #f3f4f6;
-        --gray-200: #e5e7eb;
-        --gray-300: #d1d5db;
-        --gray-600: #4b5563;
-        --gray-800: #1f2937;
-        --success-color: #10b981;
-        --warning-color: #f59e0b;
-        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        --radius-sm: 0.375rem;
-        --radius-md: 0.5rem;
-        --radius-lg: 0.75rem;
-        --radius-xl: 1rem;
-    }
-    
-    /* Section Hero - Pleine largeur */
-    .hero-section {
-        background: linear-gradient(135deg, var(--dark-bg) 0%, #374151 100%);
-        color: var(--white);
-        padding: 5rem 1rem;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-    }
-    
-    .hero-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(circle at 30% 20%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
-    }
-    
-    .hero-title {
-        font-size: 3rem;
-        font-weight: 800;
-        margin-bottom: 1.5rem;
-        line-height: 1.2;
-        position: relative;
-        z-index: 1;
-        max-width: 900px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.25rem;
-        color: var(--gray-300);
-        max-width: 800px;
-        margin: 0 auto 3rem;
-        line-height: 1.6;
-        position: relative;
-        z-index: 1;
-    }
-    
-    .hero-actions {
-        display: flex;
-        gap: 1.5rem;
-        justify-content: center;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 1;
-    }
-    
-    /* Boutons */
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem 2.5rem;
-        font-weight: 600;
-        border-radius: var(--radius-md);
-        text-decoration: none;
-        transition: all 0.2s ease;
-        border: none;
-        cursor: pointer;
-        font-size: 1.125rem;
-        gap: 0.75rem;
-        min-width: 200px;
-    }
-    
-    .btn-primary {
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-        color: var(--white);
-    }
-    
-    .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-xl);
-        background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
-    }
-    
-    .btn-secondary {
-        background: transparent;
-        color: var(--white);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-    
-    .btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: var(--white);
-        transform: translateY(-3px);
-    }
-    
-    .btn-success {
-        background: linear-gradient(135deg, var(--success-color), #059669);
-        color: var(--white);
-    }
-    
-    .btn-success:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-xl);
-    }
-    
-    /* Section Promotion - Pleine largeur avec padding interne seulement */
-    .promotion-section {
-        background: var(--white);
-        padding: 4rem 1rem;
-        width: 100%;
-    }
-    
-    .section-header {
-        text-align: center;
-        margin-bottom: 3rem;
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 1rem;
-    }
-    
-    .section-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: var(--gray-800);
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
-    }
-    
-    .section-subtitle {
-        color: var(--gray-600);
-        font-size: 1.25rem;
-        max-width: 900px;
-        margin: 0 auto;
-        line-height: 1.6;
-    }
-    
-    /* Plans de tarification */
-    .pricing-plans {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin-bottom: 3rem;
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 1rem;
-    }
-    
-    .pricing-card {
-        background: var(--white);
-        border-radius: var(--radius-xl);
-        padding: 2.5rem;
-        border: 1px solid var(--gray-200);
-        transition: all 0.3s ease;
-        position: relative;
-        box-shadow: var(--shadow-lg);
-    }
-    
-    .pricing-card:hover {
-        transform: translateY(-8px);
-        box-shadow: var(--shadow-xl);
-        border-color: var(--primary-color);
-    }
-    
-    .pricing-card.popular {
-        border: 3px solid var(--primary-color);
-        position: relative;
-    }
-    
-    .popular-badge {
-        position: absolute;
-        top: -15px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--primary-color);
-        color: var(--white);
-        padding: 0.5rem 1.5rem;
-        border-radius: 25px;
-        font-size: 0.875rem;
-        font-weight: 700;
-        box-shadow: var(--shadow-md);
-    }
-    
-    .plan-title {
-        font-size: 1.75rem;
-        font-weight: 700;
-        color: var(--gray-800);
-        text-align: center;
-        margin-bottom: 1.5rem;
-    }
-    
-    .plan-features {
-        list-style: none;
-        padding: 0;
-        margin: 2rem 0;
-    }
-    
-    .plan-features li {
-        padding: 0.75rem 0;
-        color: var(--gray-600);
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 1rem;
-        border-bottom: 1px solid var(--gray-100);
-    }
-    
-    .plan-features li:last-child {
-        border-bottom: none;
-    }
-    
-    .plan-features li::before {
-        content: "✓";
-        color: var(--success-color);
-        font-weight: bold;
-        font-size: 1.125rem;
-    }
-    
-    .plan-actions {
-        text-align: center;
-        margin-top: 2rem;
-    }
-    
-    /* Section Catégories - Pleine largeur */
-    .categories-section {
-        background: var(--light-bg);
-        padding: 4rem 1rem;
-        width: 100%;
-    }
-    
-    .categories-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 1rem;
-    }
-    
-    .category-card {
-        background: var(--white);
-        border-radius: var(--radius-xl);
-        padding: 2.5rem;
-        border: 1px solid var(--gray-200);
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow-md);
-    }
-    
-    .category-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-xl);
-        border-color: var(--primary-color);
-    }
-    
-    .category-icon {
-        font-size: 3.5rem;
-        margin-bottom: 1.5rem;
-        display: block;
-    }
-    
-    .category-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--gray-800);
-        margin-bottom: 1rem;
-    }
-    
-    .category-description {
-        color: var(--gray-600);
-        line-height: 1.7;
-        font-size: 1.125rem;
-    }
-    
-    /* Section Features - Pleine largeur */
-    .features-section {
-        background: var(--white);
-        padding: 4rem 1rem;
-        width: 100%;
-        border-top: 1px solid var(--gray-200);
-        border-bottom: 1px solid var(--gray-200);
-    }
-    
-    .features-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 1rem;
-    }
-    
-    .feature-item {
-        background: var(--white);
-        border-radius: var(--radius-lg);
-        padding: 2rem;
-        display: flex;
-        align-items: flex-start;
-        gap: 1.5rem;
-        transition: all 0.3s ease;
-        border: 1px solid var(--gray-200);
-        box-shadow: var(--shadow-sm);
-    }
-    
-    .feature-item:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-lg);
-        border-color: var(--primary-color);
-    }
-    
-    .feature-icon {
-        color: var(--primary-color);
-        font-size: 2rem;
-        flex-shrink: 0;
-        background: var(--gray-100);
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .feature-content h4 {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: var(--gray-800);
-        margin-bottom: 0.75rem;
-    }
-    
-    .feature-content p {
-        color: var(--gray-600);
-        font-size: 1rem;
-        line-height: 1.6;
-    }
-    
-    /* Section CTA - Pleine largeur */
-    .cta-section {
-        background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
-        color: var(--white);
-        padding: 5rem 1rem;
-        text-align: center;
-        width: 100%;
-    }
-    
-    .cta-title {
-        font-size: 2.5rem;
-        font-weight: 800;
-        margin-bottom: 1.5rem;
-    }
-    
-    .cta-subtitle {
-        font-size: 1.25rem;
-        opacity: 0.95;
-        max-width: 700px;
-        margin: 0 auto 3rem;
-        line-height: 1.6;
-    }
-    
-    .cta-actions {
-        display: flex;
-        gap: 1.5rem;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    
-    /* Responsive */
-    @media (max-width: 1024px) {
-        .hero-title {
-            font-size: 2.5rem;
-        }
-        
-        .section-title {
-            font-size: 2.25rem;
-        }
-        
-        .categories-grid,
-        .pricing-plans {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-    
-    @media (max-width: 768px) {
-        .hero-title {
-            font-size: 2rem;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.125rem;
-        }
-        
-        .section-title {
-            font-size: 2rem;
-        }
-        
-        .section-subtitle {
-            font-size: 1.125rem;
-        }
-        
-        .hero-actions,
-        .cta-actions {
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .btn {
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        .categories-grid,
-        .pricing-plans,
-        .features-list {
-            grid-template-columns: 1fr;
-        }
-        
-        .pricing-card,
-        .category-card,
-        .feature-item {
-            padding: 2rem 1.5rem;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .hero-section {
-            padding: 4rem 1rem;
-        }
-        
-        .hero-title {
-            font-size: 1.75rem;
-        }
-        
-        .section-title {
-            font-size: 1.75rem;
-        }
-        
-        .cta-title {
-            font-size: 2rem;
-        }
-        
-        .btn {
-            padding: 0.875rem 1.5rem;
-            font-size: 1rem;
-            min-width: auto;
-        }
-        
-        .category-icon {
-            font-size: 2.5rem;
-        }
-    }
-</style>
+
 
 <div class="home-container">
     <!-- Section Hero - Pleine largeur -->
-    <section class="hero-section">
-        <h1 class="hero-title">Bienvenue sur MikiMultiService </h1>
-        <p class="hero-subtitle">
-            La plateforme qui connecte clients, prestataires et administrateurs pour tous vos besoins de services
+<!-- Section Hero avec Image de Fond -->
+<section class="relative h-[500px] md:h-[600px] flex items-center justify-center overflow-hidden">
+    <!-- Image de fond -->
+    <div class="absolute inset-0 z-0">
+        <img 
+            src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" 
+            alt="Background" 
+            class="w-full h-full object-cover"
+        />
+        <!-- Overlay sombre pour la lisibilité (Gradient de noir) -->
+        <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40"></div>
+    </div>
+
+    <!-- Contenu Texte -->
+    <div class="relative z-10 flex flex-col items-center text-center px-6 max-w-5xl mx-auto">
+        <span class="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-widest text-blue-400 uppercase bg-blue-400/10 rounded-full">
+            Solution Multi-Services
+        </span>
+        
+        <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+            Bienvenue sur <span class="text-blue-500">MikiMultiService</span>
+        </h1>
+        
+        <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl leading-relaxed">
+            La plateforme d'excellence qui connecte intelligemment <span class="text-white font-medium">clients, prestataires et administrateurs</span> pour transformer vos besoins en solutions concrètes.
         </p>
-        <div class="hero-actions">
-            <a href="{{ route('offers.index') }}" class="btn btn-primary">
-                 Parcourir les offres
+
+        <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+            <a href="{{ route('offers.index') }}" class="group flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition-all duration-300 hover:-translate-y-1">
+                <i class="fa-solid fa-magnifying-glass mr-2 group-hover:scale-110 transition-transform"></i>
+                Parcourir les offres
             </a>
-            <a href="{{ route('register') }}" class="btn btn-secondary">
-                 Créer un compte
+            
+            <a href="{{ route('register') }}" class="flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <i class="fa-solid fa-user-plus mr-2"></i>
+                Créer un compte
             </a>
         </div>
-    </section>
+
+        <!-- Petite preuve sociale optionnelle -->
+        <div class="mt-12 flex items-center gap-4 text-sm text-gray-400">
+            <div class="flex -space-x-2">
+                <img class="w-8 h-8 rounded-full border-2 border-gray-900 shadow-sm" src="https://ui-avatars.com/api/?name=User+1&bg=0284c7&color=fff" alt="">
+                <img class="w-8 h-8 rounded-full border-2 border-gray-900 shadow-sm" src="https://ui-avatars.com/api/?name=User+2&bg=4f46e5&color=fff" alt="">
+                <img class="w-8 h-8 rounded-full border-2 border-gray-900 shadow-sm" src="https://ui-avatars.com/api/?name=User+3&bg=059669&color=fff" alt="">
+            </div>
+            <p>Rejoint par +1,000 utilisateurs satisfaits</p>
+        </div>
+    </div>
+</section>
+
+
     
     <!-- Section Promotion - Pleine largeur -->
-    <section class="promotion-section">
-        <div class="section-header">
-            <h2 class="section-title">
-                <span><i class="fa-solid fa-megaphone"></i></span> Promouvoir votre marque
+    <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <!-- En-tête de section -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl mb-6 shadow-sm">
+                <i class="fa-solid fa-megaphone text-2xl"></i>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+                Promouvoir votre marque
             </h2>
-            <p class="section-subtitle">
+            <p class="text-lg text-gray-600">
                 Augmentez votre visibilité grâce à nos plans de promotion adaptés à tous les budgets.
-                MikiMultiService vous permet de mettre en avant vos services auprès des clients les plus actifs.
+                Mettez en avant vos services auprès des clients les plus actifs.
             </p>
         </div>
-        
-        <div class="pricing-plans">
+
+        <!-- Grille des Plans -->
+        <div class="grid md:grid-cols-3 gap-8 items-stretch">
+            
             <!-- Plan Basique -->
-            <div class="pricing-card">
-                <h3 class="plan-title">Basique</h3>
-                <ul class="plan-features">
-                    <li>Visibilité standard</li>
-                    <li>Statistiques de base</li>
-                    <li>Support email</li>
-                    <li>1 publication simultanée</li>
-                </ul><br><br><br><br>
-
-
-
-
-                 <div class="plan-actions">
-                    <a href="{{ route('promotions.subscribe') }}" class="btn btn-primary">
-                        Choisir ce plan
-                    </a>
+            <div class="group bg-gray-50 rounded-3xl p-8 border border-gray-200 flex flex-col hover:bg-white hover:shadow-2xl hover:border-transparent transition-all duration-300">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-gray-900">Basique</h3>
+                    <p class="text-sm text-gray-500 mt-2">Pour commencer à se faire connaître</p>
                 </div>
-            </div>
-            
-            <!-- Plan Premium -->
-            <div class="pricing-card popular">
-                <div class="popular-badge">LE PLUS POPULAIRE</div>
-                <h3 class="plan-title">Premium</h3>
-                <ul class="plan-features">
-                    <li>Visibilité renforcée</li>
-                    <li>Statistiques avancées</li>
-                    <li>Support prioritaire</li>
-                    <li>3 publications simultanées</li>
-                    <li>Badge "Premium" exclusif</li>
-                    <li>Mise en avant dans les résultats</li>
+                
+                <ul class="space-y-4 mb-10 flex-grow">
+                    <li class="flex items-center text-gray-600 italic">
+                        <i class="fa-solid fa-circle-check text-green-500 mr-3"></i> Visibilité standard
+                    </li>
+                    <li class="flex items-center text-gray-600 italic">
+                        <i class="fa-solid fa-circle-check text-green-500 mr-3"></i> Statistiques de base
+                    </li>
+                    <li class="flex items-center text-gray-600 italic">
+                        <i class="fa-solid fa-circle-check text-green-500 mr-3"></i> Support email
+                    </li>
+                    <li class="flex items-center text-gray-600 italic">
+                        <i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 1 publication simultanée
+                    </li>
                 </ul>
-                <div class="plan-actions">
-                    <a href="{{ route('promotions.subscribe') }}" class="btn btn-primary">
-                        Choisir ce plan
-                    </a>
-                </div>
+
+                <a href="{{ route('promotions.subscribe') }}" class="w-full py-4 px-6 text-center font-bold text-blue-600 border-2 border-blue-600 rounded-xl hover:bg-blue-600 hover:text-white transition-colors duration-300">
+                    Choisir ce plan
+                </a>
             </div>
-            
+
+            <!-- Plan Premium (Mis en avant) -->
+            <div class="relative bg-blue-600 rounded-3xl p-8 shadow-xl shadow-blue-200 flex flex-col transform md:-translate-y-4 scale-105 z-10">
+                <div class="absolute top-0 right-8 -translate-y-1/2 bg-yellow-400 text-yellow-900 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">
+                    Le plus populaire
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-white">Premium</h3>
+                    <p class="text-sm text-blue-100 mt-2">La solution idéale pour les pros</p>
+                </div>
+                
+                <ul class="space-y-4 mb-10 flex-grow text-white">
+                    <li class="flex items-center">
+                        <i class="fa-solid fa-circle-check text-blue-300 mr-3"></i> Visibilité renforcée
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fa-solid fa-circle-check text-blue-300 mr-3"></i> Statistiques avancées
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fa-solid fa-circle-check text-blue-300 mr-3"></i> Support prioritaire
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fa-solid fa-circle-check text-blue-300 mr-3"></i> 3 publications simultanées
+                    </li>
+                    <li class="flex items-center font-bold">
+                        <i class="fa-solid fa-star text-yellow-300 mr-3"></i> Badge "Premium" exclusif
+                    </li>
+                </ul>
+
+                <a href="{{ route('promotions.subscribe') }}" class="w-full py-4 px-6 text-center font-bold bg-white text-blue-600 rounded-xl hover:bg-blue-50 transition-colors duration-300 shadow-lg">
+                    Choisir ce plan
+                </a>
+            </div>
+
             <!-- Plan Entreprise -->
-            <div class="pricing-card">
-                <h3 class="plan-title">Entreprise</h3>
-                <ul class="plan-features">
-                    <li>Visibilité maximale</li>
-                    <li>Analytics complets</li>
-                    <li>Support dédié 24/7</li>
-                    <li>Publications illimitées</li>
-                    <li>Page entreprise personnalisée</li>
-                    <li>Publicités ciblées</li>
-                    <li>API d'intégration</li>
+            <div class="group bg-gray-50 rounded-3xl p-8 border border-gray-200 flex flex-col hover:bg-white hover:shadow-2xl hover:border-transparent transition-all duration-300">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-gray-900">Entreprise</h3>
+                    <p class="text-sm text-gray-500 mt-2">Puissance maximale pour agences</p>
+                </div>
+                
+                <ul class="space-y-4 mb-10 flex-grow">
+                    <li class="flex items-center text-gray-600">
+                        <i class="fa-solid fa-circle-check text-green-500 mr-3"></i> Visibilité maximale
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fa-solid fa-circle-check text-green-500 mr-3"></i> Analytics complets
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fa-solid fa-circle-check text-green-500 mr-3"></i> Support dédié 24/7
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fa-solid fa-circle-check text-green-500 mr-3"></i> Publications illimitées
+                    </li>
+                    <li class="flex items-center text-gray-600">
+                        <i class="fa-solid fa-circle-check text-green-500 mr-3"></i> API d'intégration
+                    </li>
                 </ul>
-                <div class="plan-actions">
-                    <a href="{{ route('promotions.subscribe') }}" class="btn btn-primary">
-                        Choisir ce plan
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="section-header">
-            <div class="hero-actions">
-                <a href="{{ route('promotions.subscribe') }}" class="btn btn-primary">
-                     Découvrir tous les plans
-                </a>
-                <a
-                 href="{{ route('ads.index') }}" class="btn btn-success">
-                    Voir les publicités
+
+                <a href="{{ route('promotions.subscribe') }}" class="w-full py-4 px-6 text-center font-bold text-blue-600 border-2 border-blue-600 rounded-xl hover:bg-blue-600 hover:text-white transition-colors duration-300">
+                    Choisir ce plan
                 </a>
             </div>
         </div>
-    </section>
+
+        <!-- Actions secondaires -->
+        <div class="mt-20 flex flex-col sm:flex-row items-center justify-center gap-6">
+            <a href="{{ route('promotions.subscribe') }}" class="text-gray-600 font-semibold hover:text-blue-600 flex items-center gap-2 transition">
+                Découvrir tous les détails des plans <i class="fa-solid fa-arrow-right text-sm"></i>
+            </a>
+            <span class="hidden sm:block text-gray-300">|</span>
+            <a href="{{ route('ads.index') }}" class="px-6 py-2 bg-green-100 text-green-700 font-bold rounded-full hover:bg-green-200 transition">
+                <i class="fa-solid fa-rectangle-ad mr-2"></i> Voir les publicités en cours
+            </a>
+        </div>
+    </div>
+</section>
     
-    <!-- Section Catégories - Pleine largeur -->
-    <section class="categories-section">
-        <div class="section-header">
-            <h2 class="section-title">Nos catégories de services</h2>
-            <p class="section-subtitle">
-                Découvrez notre large gamme de services professionnels adaptés à tous vos besoins
+    <!-- Section Catégories -->
+<section class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Nos catégories de services</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Découvrez notre large gamme de services professionnels adaptés à tous vos besoins quotidiens.
             </p>
         </div>
         
-        <div class="categories-grid">
-            <div class="category-card">
-                <div class="category-icon"></div>
-                <h3 class="category-title">Services domestiques</h3>
-                <p class="category-description">
-                    Entretien ménager, jardinage, repassage, garde d'enfants, aide aux personnes âgées. 
-                    Trouvez des professionnels qualifiés près de chez vous pour toutes vos tâches quotidiennes.
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Catégorie 1 -->
+            <div class="group relative bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                    <i class="fa-solid fa-house-chimney text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Services domestiques</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Entretien ménager, jardinage, repassage, garde d'enfants... Trouvez des professionnels qualifiés près de chez vous.
                 </p>
+                <div class="flex items-center text-blue-600 font-bold text-sm">
+                    En savoir plus <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
+                </div>
             </div>
             
-            <div class="category-card">
-                <div class="category-icon"></div>
-                <h3 class="category-title">Services étudiants</h3>
-                <p class="category-description">
-                    Cours particuliers, aide aux devoirs, soutien scolaire, assistance informatique.
-                    Des missions flexibles et abordables réalisées par des étudiants motivés et compétents.
+            <!-- Catégorie 2 -->
+            <div class="group relative bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
+                    <i class="fa-solid fa-user-graduate text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Services étudiants</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Cours particuliers, aide aux devoirs, soutien scolaire. Des missions réalisées par des étudiants motivés et compétents.
                 </p>
+                <div class="flex items-center text-purple-600 font-bold text-sm">
+                    En savoir plus <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
+                </div>
             </div>
             
-            <div class="category-card">
-                <div class="category-icon"></div>
-                <h3 class="category-title">Services techniques</h3>
-                <p class="category-description">
-                    Plomberie, électricité, réparations, dépannage urgent, installation.
-                    Trouvez l'expert qu'il vous faut en quelques clics pour tous vos travaux techniques.
+            <!-- Catégorie 3 -->
+            <div class="group relative bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                <div class="w-16 h-16 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-orange-600 group-hover:text-white transition-colors duration-300">
+                    <i class="fa-solid fa-screwdriver-wrench text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Services techniques</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Plomberie, électricité, réparations urgentes. Trouvez l'expert qu'il vous faut en quelques clics pour vos travaux.
                 </p>
+                <div class="flex items-center text-orange-600 font-bold text-sm">
+                    En savoir plus <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<!-- Section Pourquoi choisir (Features) -->
+<section class="py-24 bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col lg:flex-row items-center gap-16">
+            <!-- Colonne Texte -->
+            <div class="lg:w-1/2">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 italic">
+                    Pourquoi choisir <span class="text-blue-600">MikiMultiService</span> ?
+                </h2>
+                <p class="text-lg text-gray-600 mb-10">
+                    Une plateforme sécurisée et transparente conçue pour répondre à tous vos besoins de services avec tranquillité d'esprit.
+                </p>
+                
+                <div class="grid sm:grid-cols-2 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-shield-halved text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Validation rigoureuse</h4>
+                            <p class="text-sm text-gray-600">Chaque prestataire est vérifié par nos experts.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-bolt text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Réservation instantanée</h4>
+                            <p class="text-sm text-gray-600">Réservez en 2 minutes, 24h/24 et 7j/7.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-chart-line text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Suivi en temps réel</h4>
+                            <p class="text-sm text-gray-600">Gérez vos demandes depuis votre mobile.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Feature 4 -->
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center">
+                            <i class="fa-solid fa-lock text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-900 mb-1">Sécurité garantie</h4>
+                            <p class="text-sm text-gray-600">Paiements sécurisés et système de notation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Colonne Graphique / Image -->
+            <div class="lg:w-1/2 relative">
+                <div class="relative z-10 bg-blue-50 p-4 rounded-[2.5rem] border border-blue-100 shadow-inner">
+                    <img src="https://images.unsplash.com/photo-1600880212319-752400e96bb5?auto=format&fit=crop&w=800&q=80" 
+                         alt="Team working" 
+                         class="rounded-[2rem] shadow-2xl object-cover h-[400px] w-full" />
+                </div>
+                <!-- Éléments décoratifs -->
+                <div class="absolute -top-6 -right-6 w-32 h-32 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+                <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse duration-1000"></div>
+            </div>
+        </div>
+    </div>
+</section>
     
-    <!-- Section Pourquoi choisir - Pleine largeur -->
-    <section class="features-section">
-        <div class="section-header">
-            <h2 class="section-title">Pourquoi choisir MikiMultiService  ?</h2>
-            <p class="section-subtitle">
-                Une plateforme sécurisée et transparente conçue pour répondre à tous vos besoins de services
-            </p>
-        </div>
-        
-        <div class="features-list">
-            <div class="feature-item">
-                <!-- <div class="feature-icon"></div> -->
-                <div class="feature-content">
-                    <h4>Validation rigoureuse</h4>
-                    <p>Chaque publication et prestataire est vérifié et validé par notre équipe pour garantir qualité et sécurité.</p>
-                </div>
-            </div>
-            
-            <div class="feature-item">
-                <!-- <div class="feature-icon"></div> -->
-                <div class="feature-content">
-                    <h4>Réservation instantanée</h4>
-                    <p>Réservez un service en quelques clics avec notre interface intuitive et rapide, 24h/24 et 7j/7.</p>
-                </div>
-            </div>
-            
-            <div class="feature-item">
-                <!-- <div class="feature-icon"></div> -->
-                <div class="feature-content">
-                    <h4>Suivi en temps réel</h4>
-                    <p>Gérez vos réservations, demandes et paiements en temps réel depuis votre espace personnel sécurisé.</p>
-                </div>
-            </div>
-            
-            <div class="feature-item">
-                <!-- <div class="feature-icon"></div> -->
-                <div class="feature-content">
-                    <h4>Sécurité garantie</h4>
-                    <p>Système de signalement et d'évaluation pour garantir la qualité et la sécurité de tous les services.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Section CTA - Pleine largeur -->
-    <section class="cta-section">
-        <h2 class="cta-title">Prêt à commencer ?</h2>
-        <p class="cta-subtitle">
-            Rejoignez des milliers d'utilisateurs qui font confiance à MikiMultiService  pour leurs besoins quotidiens
+   <!-- Section CTA - Design Moderne & Impactant -->
+<section class="relative py-24 bg-gray-900 overflow-hidden">
+    <!-- Éléments décoratifs d'arrière-plan (Blobs lumineux) -->
+    <div class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600 rounded-full blur-[120px] opacity-20"></div>
+    <div class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-96 h-96 bg-purple-600 rounded-full blur-[120px] opacity-20"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+        <!-- Badge -->
+        <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-blue-400 uppercase bg-blue-400/10 rounded-full border border-blue-400/20">
+            Rejoignez l'aventure
+        </span>
+
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-8 leading-tight">
+            Prêt à simplifier <br class="hidden md:block"> <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 font-italic">votre quotidien ?</span>
+        </h2>
+
+        <p class="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+            Rejoignez des milliers d'utilisateurs qui font confiance à <span class="text-white font-semibold">MikiMultiService</span>. Que vous soyez client ou prestataire, nous avons la solution.
         </p>
-        <div class="cta-actions">
-            <a href="{{ route('register') }}" class="btn btn-primary">
-                 Créer un compte gratuit
+
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+            <!-- Bouton Principal (Éclatant) -->
+            <a href="{{ route('register') }}" class="group relative w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 font-bold text-white bg-blue-600 rounded-2xl transition-all duration-300 hover:bg-blue-700 hover:scale-105 active:scale-95 shadow-xl shadow-blue-600/40">
+                <i class="fa-solid fa-rocket mr-3 group-hover:animate-bounce"></i>
+                Créer un compte gratuit
             </a>
-            <a href="{{ route('offers.create') }}" class="btn btn-secondary">
-                 Publier une offre
+
+            <!-- Bouton Secondaire (Verre / Outline) -->
+            <a href="{{ route('offers.create') }}" class="w-full sm:w-auto inline-flex items-center justify-center px-10 py-4 font-bold text-white bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl transition-all duration-300 hover:bg-white/10 hover:border-white/30">
+                <i class="fa-solid fa-plus-circle mr-3 text-blue-400"></i>
+                Publier une offre
             </a>
         </div>
-    </section>
+
+        <!-- Preuve sociale discrète -->
+        <div class="mt-16 pt-10 border-t border-white/5">
+            <p class="text-sm text-gray-500 uppercase tracking-widest font-semibold flex flex-col md:flex-row items-center justify-center gap-4">
+                <span>Sans engagement</span>
+                <span class="hidden md:block text-gray-700">•</span>
+                <span>Support 24/7</span>
+                <span class="hidden md:block text-gray-700">•</span>
+                <span>Paiement sécurisé</span>
+            </p>
+        </div>
+    </div>
+</section>
 </div>
 
 
 
-<script>
-    // ============================================
-    // 1. ANIMATIONS AU DÉFILEMENT (SCROLL ANIMATIONS)
-    // ============================================
-    document.addEventListener('DOMContentLoaded', function() {
-        // Observer pour les animations d'apparition
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                    // Si c'est une carte de prix, ajouter une animation spéciale
-                    if (entry.target.classList.contains('pricing-card')) {
-                        entry.target.style.transform = 'translateY(0)';
-                        entry.target.style.opacity = '1';
-                    }
-                }
-            });
-        }, observerOptions);
-
-        // Observer les éléments à animer
-        document.querySelectorAll('.pricing-card, .category-card, .feature-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease-out';
-            observer.observe(el);
-        });
-
-        // ============================================
-        // 2. INTERACTIVITÉ DES CARTES DE PRIX
-        // ============================================
-        const pricingCards = document.querySelectorAll('.pricing-card');
-        
-        pricingCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-15px) scale(1.02)';
-                this.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                if (!this.classList.contains('hovered')) {
-                    this.style.transform = 'translateY(0) scale(1)';
-                    this.style.boxShadow = 'var(--shadow-lg)';
-                }
-            });
-
-            // Effet au clic
-            card.addEventListener('click', function(e) {
-                if (!e.target.closest('.btn')) {
-                    this.classList.toggle('hovered');
-                    
-                    // Remettre les autres cartes à l'état normal
-                    pricingCards.forEach(otherCard => {
-                        if (otherCard !== this) {
-                            otherCard.classList.remove('hovered');
-                            otherCard.style.transform = 'translateY(0) scale(1)';
-                            otherCard.style.boxShadow = 'var(--shadow-lg)';
-                        }
-                    });
-
-                    if (this.classList.contains('hovered')) {
-                        this.style.transform = 'translateY(-15px) scale(1.03)';
-                        this.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25)';
-                        // Scroll doux vers la carte
-                        this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    } else {
-                        this.style.transform = 'translateY(0) scale(1)';
-                        this.style.boxShadow = 'var(--shadow-lg)';
-                    }
-                }
-            });
-        });
-
-        // ============================================
-        // 3. BOUTONS INTERACTIFS
-        // ============================================
-        const buttons = document.querySelectorAll('.btn');
-        
-        buttons.forEach(button => {
-            // Effet de pression
-            button.addEventListener('mousedown', function() {
-                this.style.transform = 'scale(0.95)';
-            });
-
-            button.addEventListener('mouseup', function() {
-                this.style.transform = 'scale(1)';
-            });
-
-            button.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-            });
-
-            // Animation au survol
-            button.addEventListener('mouseenter', function() {
-                this.style.transition = 'all 0.3s ease';
-            });
-        });
-
-        // ============================================
-        // 4. COMPTEUR ANIMÉ (pour les statistiques)
-        // ============================================
-        function animateCounter(element, target, duration = 2000) {
-            let start = 0;
-            const increment = target / (duration / 16);
-            const timer = setInterval(() => {
-                start += increment;
-                if (start >= target) {
-                    element.textContent = target.toLocaleString();
-                    clearInterval(timer);
-                } else {
-                    element.textContent = Math.floor(start).toLocaleString();
-                }
-            }, 16);
-        }
-
-        // Ajouter un élément de statistiques si nécessaire
-        const statsSection = document.createElement('div');
-        statsSection.className = 'stats-section';
-        statsSection.innerHTML = `
-            <div class="section-header">
-                <h2 class="section-title"> Notre impact</h2>
-                <p class="section-subtitle">Des chiffres qui parlent d'eux-mêmes</p>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number" data-count="5000">0</div>
-                    <div class="stat-label">Utilisateurs satisfaits</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" data-count="1200">0</div>
-                    <div class="stat-label">Services réalisés</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" data-count="98">0</div>
-                    <div class="stat-label">% de satisfaction</div>
-                </div>
-            </div>
-        `;
-
-        // Insérer après la section features
-        document.querySelector('.features-section').after(statsSection);
-
-        // ============================================
-        // 5. ANIMATION DES STATISTIQUES AU SCROLL
-        // ============================================
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    document.querySelectorAll('.stat-number').forEach(stat => {
-                        const target = parseInt(stat.getAttribute('data-count'));
-                        animateCounter(stat, target);
-                    });
-                    statsObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        statsObserver.observe(statsSection);
-
-        // ============================================
-        // 6. EFFET DE TAPIS ROUlant SUR LES CATÉGORIES
-        // ============================================
-        const categoryCards = document.querySelectorAll('.category-card');
-        
-        categoryCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                const icon = this.querySelector('.category-icon');
-                icon.style.transform = 'scale(1.2) rotate(5deg)';
-                icon.style.transition = 'transform 0.3s ease';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                const icon = this.querySelector('.category-icon');
-                icon.style.transform = 'scale(1) rotate(0deg)';
-            });
-
-            // Effet de clic
-            card.addEventListener('click', function() {
-                this.style.borderColor = 'var(--primary-color)';
-                this.style.boxShadow = '0 20px 40px rgba(37, 99, 235, 0.2)';
-                
-                // Retirer l'effet après 2 secondes
-                setTimeout(() => {
-                    this.style.boxShadow = 'var(--shadow-md)';
-                }, 2000);
-            });
-        });
-
-        // ============================================
-        // 7. MODAL D'INSCRIPTION RAPIDE
-        // ============================================
-        const quickSignupBtn = document.createElement('button');
-        quickSignupBtn.className = 'quick-signup-btn';
-        quickSignupBtn.innerHTML = ' Démarrer maintenant';
-        quickSignupBtn.style.cssText = `
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border: none;
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: var(--shadow-xl);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        `;
-
-        document.body.appendChild(quickSignupBtn);
-
-        quickSignupBtn.addEventListener('click', function() {
-            // Animation du bouton
-            this.style.transform = 'scale(0.9)';
-            setTimeout(() => {
-                this.style.transform = 'scale(1)';
-                // Redirection vers la page d'inscription
-                window.location.href = "{{ route('register') }}";
-            }, 300);
-        });
-
-        // Animation au survol du bouton flottant
-        quickSignupBtn.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
-            this.style.boxShadow = '0 25px 50px rgba(37, 99, 235, 0.3)';
-        });
-
-        quickSignupBtn.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-            this.style.boxShadow = 'var(--shadow-xl)';
-        });
-
-        // ============================================
-        // 8. ANIMATION DU TITRE HERO
-        // ============================================
-        const heroTitle = document.querySelector('.hero-title');
-        if (heroTitle) {
-            heroTitle.style.opacity = '0';
-            heroTitle.style.transform = 'translateY(30px)';
-            
-            setTimeout(() => {
-                heroTitle.style.transition = 'all 1s ease-out';
-                heroTitle.style.opacity = '1';
-                heroTitle.style.transform = 'translateY(0)';
-            }, 300);
-        }
-
-        // ============================================
-        // 9. SYSTÈME DE NOTIFICATION
-        // ============================================
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.innerHTML = `
-                <span>${message}</span>
-                <button class="notification-close">×</button>
-            `;
-            
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? 'var(--success-color)' : 'var(--primary-color)'};
-                color: white;
-                padding: 15px 20px;
-                border-radius: var(--radius-md);
-                box-shadow: var(--shadow-lg);
-                z-index: 1001;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                min-width: 300px;
-                transform: translateX(400px);
-                transition: transform 0.3s ease;
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // Animation d'entrée
-            setTimeout(() => {
-                notification.style.transform = 'translateX(0)';
-            }, 10);
-            
-            // Bouton de fermeture
-            notification.querySelector('.notification-close').addEventListener('click', function() {
-                notification.style.transform = 'translateX(400px)';
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            });
-            
-            // Fermeture automatique
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.style.transform = 'translateX(400px)';
-                    setTimeout(() => notification.remove(), 300);
-                }
-            }, 5000);
-        }
-
-        // Exemple de notification (à adapter selon vos besoins)
-        setTimeout(() => {
-            showNotification(' Bienvenue sur MikiMultiService ! Découvrez nos offres exclusives.', 'success');
-        }, 2000);
-
-        // ============================================
-        // 10. EFFET DE GLOW AU SURVOL DES ICÔNES
-        // ============================================
-        const icons = document.querySelectorAll('.category-icon, .feature-icon');
-        
-        icons.forEach(icon => {
-            icon.addEventListener('mouseenter', function() {
-                this.style.textShadow = '0 0 20px rgba(37, 99, 235, 0.5)';
-            });
-            
-            icon.addEventListener('mouseleave', function() {
-                this.style.textShadow = 'none';
-            });
-        });
-
-        // ============================================
-        // 11. ANIMATION DU SCROLL
-        // ============================================
-        let lastScroll = 0;
-        const navbar = document.querySelector('.navbar') || document.createElement('div');
-        
-        window.addEventListener('scroll', function() {
-            const currentScroll = window.pageYOffset;
-            
-            // Effet de réduction du header au scroll
-            if (currentScroll > 100) {
-                document.querySelector('.hero-section')?.style.setProperty('padding', '3rem 1rem');
-                quickSignupBtn.style.bottom = '20px';
-                quickSignupBtn.style.right = '20px';
-                quickSignupBtn.style.padding = '12px 20px';
-            } else {
-                document.querySelector('.hero-section')?.style.setProperty('padding', '5rem 1rem');
-                quickSignupBtn.style.bottom = '30px';
-                quickSignupBtn.style.right = '30px';
-                quickSignupBtn.style.padding = '15px 25px';
-            }
-            
-            lastScroll = currentScroll;
-        });
-
-        // ============================================
-        // 12. ANIMATION DE CHARGEMENT
-        // ============================================
-        window.addEventListener('load', function() {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.5s ease';
-            
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
-    });
-
-    // ============================================
-    // 13. STYLES ADDITIONNELS POUR LES ANIMATIONS
-    // ============================================
-    const style = document.createElement('style');
-    style.textContent = `
-        /* Styles pour les notifications */
-        .notification-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            margin-left: 15px;
-            padding: 0;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background-color 0.2s;
-        }
-        
-        .notification-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        /* Styles pour les statistiques */
-        .stats-section {
-            background: var(--light-bg);
-            padding: 4rem 1rem;
-            width: 100%;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 3rem auto 0;
-            padding: 0 1rem;
-        }
-        
-        .stat-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            text-align: center;
-            border: 1px solid var(--gray-200);
-            transition: all 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            color: var(--gray-600);
-            font-size: 1.125rem;
-        }
-        
-        /* Animation pour les cartes au scroll */
-        .animated {
-            animation: fadeUp 0.6s ease-out forwards;
-        }
-        
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Effet de pulse pour les boutons CTA */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .cta-section .btn-primary {
-            animation: pulse 2s infinite;
-        }
-        
-        /* Responsive pour le bouton flottant */
-        @media (max-width: 768px) {
-            .quick-signup-btn {
-                bottom: 20px !important;
-                right: 20px !important;
-                padding: 12px 20px !important;
-                font-size: 14px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stat-number {
-                font-size: 2.5rem;
-            }
-        }
-    `;
-    
-    document.head.appendChild(style);
-</script>
 
 @endsection

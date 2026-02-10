@@ -2,400 +2,157 @@
 
 @section('content')
 
-<style>
-/* === VARIABLES ET RESET === */
-:root {
-    --primary: #3498db;
-    --primary-dark: #2980b9;
-    --secondary: #2ecc71;
-    --secondary-dark: #27ae60;
-    --danger: #e74c3c;
-    --warning: #f39c12;
-    --info: #9b59b6;
-    --light: #ecf0f1;
-    --dark: #2c3e50;
-    --gray: #95a5a6;
-    --border: #dfe6e9;
-    --radius: 10px;
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
 
-.container {
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 0 15px;
-}
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-6">
+        
+        <!-- Header & Action -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+            <div>
+                <h2 class="text-3xl font-black text-gray-900 italic uppercase">Tableau de bord <span class="text-blue-600 font-bold">Prestataire</span></h2>
+                <p class="text-gray-500 mt-1">Gérez vos activités, suivez vos performances et répondez à vos clients.</p>
+            </div>
+            <a href="{{ route('offers.create') }}" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-700 transition shadow-lg shadow-blue-600/20 group">
+                <i class="fa-solid fa-plus-circle mr-2 group-hover:rotate-90 transition-transform"></i>
+                Nouvelle Offre
+            </a>
+        </div>
 
-/* === TITRES === */
-.container h2 {
-    color: var(--dark);
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 3px solid var(--primary);
-    position: relative;
-}
+        <!-- Section Statistiques (Grid) -->
+        <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-16">
+            <!-- Offres -->
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+                <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <div class="text-2xl font-black text-gray-900">{{ $stats['total_offres'] }}</div>
+                <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Offres</div>
+            </div>
 
-.container h2::before {
-    content: "";
-    margin-right: 10px;
-    font-size: 1.8rem;
-}
+            <!-- Réservations -->
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+                <div class="w-10 h-10 bg-green-50 text-green-600 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <div class="text-2xl font-black text-gray-900">{{ $stats['total_reservations'] }}</div>
+                <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Réservations</div>
+            </div>
 
-.container h3 {
-    color: var(--dark);
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin: 35px 0 20px 0;
-    padding-left: 15px;
-    border-left: 4px solid var(--secondary);
-    background: linear-gradient(to right, rgba(46, 204, 113, 0.05), transparent);
-}
+            <!-- Vues -->
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+                <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <div class="text-2xl font-black text-gray-900">{{ $stats['total_vues'] }}</div>
+                <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Vues</div>
+            </div>
 
-/* === STATISTIQUES === */
-.container > ul:first-of-type {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
-    list-style: none;
-    padding: 0;
-    margin: 20px 0 40px 0;
-}
+            <!-- Clics -->
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+                <div class="w-10 h-10 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-mouse-pointer"></i>
+                </div>
+                <div class="text-2xl font-black text-gray-900">{{ $stats['total_clics'] }}</div>
+                <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Clics</div>
+            </div>
 
-.container > ul:first-of-type li {
-    background: white;
-    padding: 20px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    border-left: 4px solid var(--primary);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
+            <!-- Conversations -->
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+                <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <div class="text-2xl font-black text-gray-900">{{ $stats['total_conversations'] }}</div>
+                <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Messages</div>
+            </div>
 
-.container > ul:first-of-type li:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
-}
+            <!-- Signalements -->
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+                <div class="w-10 h-10 bg-red-50 text-red-600 rounded-xl flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="text-2xl font-black text-gray-900">{{ $stats['total_signalements'] }}</div>
+                <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Alertes</div>
+            </div>
+        </div>
 
-.container > ul:first-of-type li::before {
-    content: "•";
-    color: var(--primary);
-    font-size: 1.5rem;
-    position: absolute;
-    left: 10px;
-    top: 15px;
-}
+        <div class="grid lg:grid-cols-2 gap-12">
+            
+            <!-- Colonne Gauche : Mes Offres -->
+            <section>
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-black text-gray-900 flex items-center gap-2">
+                        <span class="w-2 h-8 bg-blue-600 rounded-full"></span>
+                        Mes Offres récentes
+                    </h3>
+                </div>
+                <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden">
+                    <div class="divide-y divide-gray-50">
+                        @foreach($offers as $offer)
+                        <div class="p-5 flex items-center justify-between hover:bg-gray-50 transition">
+                            <div class="flex flex-col">
+                                <span class="font-bold text-gray-900 underline decoration-blue-200 underline-offset-4">{{ $offer->titre }}</span>
+                                <span class="text-xs text-gray-400 uppercase tracking-tighter mt-1 italic italic">Publié le 12 Mars</span>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest {{ $offer->statut == 'actif' ? 'bg-green-100 text-green-600' : 'bg-orange-100 text-orange-600' }}">
+                                {{ $offer->statut }}
+                            </span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
 
-.container > ul:first-of-type li {
-    padding-left: 35px;
-    font-size: 0.95rem;
-    color: var(--dark);
-}
+            <!-- Colonne Droite : Réservations Reçues -->
+            <section>
+                <h3 class="text-xl font-black text-gray-900 flex items-center gap-2 mb-6">
+                    <span class="w-2 h-8 bg-green-500 rounded-full"></span>
+                    Dernières Réservations
+                </h3>
+                <div class="space-y-4">
+                    @foreach($reservations as $reservation)
+                    <div class="bg-white p-5 rounded-[2rem] border border-gray-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-400">
+                                <i class="fa-solid fa-user text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900">{{ $reservation->client->nom }}</h4>
+                                <p class="text-xs text-gray-500 italic">Pour : {{ $reservation->offer->titre }}</p>
+                            </div>
+                        </div>
+                        <form method="POST" action="{{ route('conversations.start', $reservation) }}">
+                            @csrf
+                            <button type="submit" class="px-5 py-2.5 bg-gray-900 text-white text-xs font-bold rounded-xl hover:bg-blue-600 transition flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                Discuter
+                            </button>
+                        </form>
+                    </div>
+                    @endforeach
+                </div>
+            </section>
 
-.container > ul:first-of-type li strong {
-    display: block;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--primary);
-    margin-top: 5px;
-}
+            <!-- Conversations -->
+            <section class="lg:col-span-2 mt-8">
+                <h3 class="text-xl font-black text-gray-900 flex items-center gap-2 mb-6 text-center lg:text-left">
+                    <span class="w-2 h-8 bg-indigo-500 rounded-full"></span>
+                    Conversations actives
+                </h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($conversations as $conversation)
+                    <a href="{{ route('conversations.show', $conversation) }}" class="group bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm hover:border-blue-600 transition-all">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest italic">ID #{{ $conversation->id }}</span>
+                            <i class="fa-solid fa-chevron-right text-gray-300 group-hover:text-blue-600 transition-transform group-hover:translate-x-2"></i>
+                        </div>
+                        <h4 class="font-black text-gray-900">Conversation avec Client</h4>
+                        <p class="text-sm text-gray-500 mt-2 line-clamp-1">Cliquez pour voir les derniers messages...</p>
+                    </a>
+                    @endforeach
+                </div>
+            </section>
 
-/* === BOUTON NOUVELLE OFFRE === */
-.container .btn-primary {
-    background: linear-gradient(to right, var(--primary), var(--primary-dark));
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: var(--radius);
-    font-weight: 600;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-}
-
-.container .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
-}
-
-/* === LISTES D'OFFRES, RÉSERVATIONS, ETC === */
-.container h3 + ul {
-    background: white;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    list-style: none;
-    padding: 20px;
-    margin: 0 0 30px 0;
-    border: 1px solid var(--border);
-}
-
-.container h3 + ul li {
-    padding: 15px;
-    margin-bottom: 12px;
-    border-radius: 8px;
-    border-left: 4px solid var(--primary);
-    background: #f8fafc;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.container h3 + ul li:hover {
-    background: white;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    transform: translateX(5px);
-}
-
-/* Offres */
-.container h3:contains("Mes Offres") + ul li {
-    border-left-color: var(--secondary);
-}
-
-.container h3:contains("Mes Offres") + ul li::before {
-    content: "";
-    margin-right: 10px;
-    font-size: 1.1rem;
-}
-
-/* Statut des offres */
-.container h3:contains("Mes Offres") + ul li:contains("en_attente"),
-.container h3:contains("Mes Offres") + ul li:contains("En attente") {
-    border-left-color: var(--warning);
-}
-
-.container h3:contains("Mes Offres") + ul li:contains("validé"),
-.container h3:contains("Mes Offres") + ul li:contains("Validé") {
-    border-left-color: var(--secondary);
-}
-
-.container h3:contains("Mes Offres") + ul li:contains("refusé"),
-.container h3:contains("Mes Offres") + ul li:contains("Refusé") {
-    border-left-color: var(--danger);
-}
-
-/* Réservations */
-.container h3:contains("Réservations Reçues") + ul li {
-    border-left-color: var(--info);
-    padding-bottom: 20px;
-}
-
-.container h3:contains("Réservations Reçues") + ul li::before {
-    content: "";
-    margin-right: 10px;
-    font-size: 1.1rem;
-}
-
-/* Bouton de conversation dans les réservations */
-.container h3:contains("Réservations Reçues") + ul li form {
-    margin-top: 10px;
-    display: block;
-}
-
-.container h3:contains("Réservations Reçues") + ul li button {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.container h3:contains("Réservations Reçues") + ul li button:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-}
-
-/* Conversations */
-.container h3:contains("Conversations") + ul li {
-    border-left-color: #9b59b6;
-}
-
-.container h3:contains("Conversations") + ul li a {
-    color: var(--dark);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.container h3:contains("Conversations") + ul li a::before {
-    content: "";
-    font-size: 1.1rem;
-}
-
-.container h3:contains("Conversations") + ul li a:hover {
-    color: var(--primary);
-}
-
-/* Signalements */
-.container h3:contains("Signalements") + ul li {
-    border-left-color: var(--danger);
-}
-
-.container h3:contains("Signalements") + ul li::before {
-    content: "⚠️";
-    margin-right: 10px;
-    font-size: 1.1rem;
-}
-
-/* Statut des signalements */
-.container h3:contains("Signalements") + ul li:contains("en attente"),
-.container h3:contains("Signalements") + ul li:contains("en_attente") {
-    border-left-color: var(--warning);
-}
-
-.container h3:contains("Signalements") + ul li:contains("traité"),
-.container h3:contains("Signalements") + ul li:contains("traite") {
-    border-left-color: var(--secondary);
-}
-
-/* === SÉPARATEURS === */
-.container h3 {
-    position: relative;
-}
-
-.container h3::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 15px;
-    width: 50px;
-    height: 3px;
-    background: linear-gradient(to right, var(--secondary), var(--primary));
-    border-radius: 2px;
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-        margin: 15px;
-    }
-    
-    .container h2 {
-        font-size: 1.6rem;
-        text-align: center;
-    }
-    
-    .container h3 {
-        font-size: 1.2rem;
-    }
-    
-    .container > ul:first-of-type {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-    
-    .container h3 + ul li {
-        padding: 12px;
-        margin-bottom: 10px;
-    }
-    
-    .btn-primary {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-/* === ANIMATIONS === */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.container > ul:first-of-type li {
-    animation: slideIn 0.4s ease-out forwards;
-    animation-delay: calc(var(--i) * 0.1s);
-    opacity: 0;
-}
-
-.container h3 + ul li {
-    animation: fadeIn 0.3s ease-out forwards;
-    animation-delay: calc(var(--j) * 0.05s);
-    opacity: 0;
-}
-
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
-}
-</style>
-<div class="container">
-    <h2>Tableau de bord Prestataire</h2>
-
-    <h3>Mes Statistiques</h3>
-    <ul>
-        <li>Total Offres : {{ $stats['total_offres'] }}</li>
-        <li>Total Réservations : {{ $stats['total_reservations'] }}</li>
-        <li>Total Vues : {{ $stats['total_vues'] }}</li>
-        <li>Total Clics : {{ $stats['total_clics'] }}</li>
-        <li>Total Conversations : {{ $stats['total_conversations'] }}</li>
-        <li>Total Signalements : {{ $stats['total_signalements'] }}</li>
-    </ul>
-
-    <h3>Mes Offres</h3>
-    <a href="{{ route('offers.create') }}" class="btn btn-primary"> Nouvelle Offre</a>
-    <ul>
-        @foreach($offers as $offer)
-            <li>{{ $offer->titre }} ({{ $offer->statut }})</li>
-        @endforeach
-    </ul>
-
-    <h3>Réservations Reçues</h3>
-    <ul>
-        @foreach($reservations as $reservation)
-            <li>
-                Offre : {{ $reservation->offer->titre }} | 
-                Client : {{ $reservation->client->nom }} | 
-               
-                <form method="POST" action="{{ route('conversations.start', $reservation) }}">
-                    @csrf
-                    <button type="submit"> Démarrer la conversation</button>
-                </form>
-            </li>
-        @endforeach
-    </ul>
-
-    <h3>Conversations</h3>
-    <ul>
-        @foreach($conversations as $conversation)
-            <li>
-                <a href="{{ route('conversations.show', $conversation) }}">
-                    Conversation #{{ $conversation->id }}
-                </a>
-            </li>
-        @endforeach
-    </ul>
-
-    <!-- <h3>Signalements</h3>
-    <ul>
-        @foreach($reports as $report)
-            <li>
-                Signalement #{{ $report->id }} - Motif : {{ $report->motif }} - Statut : {{ $report->statut }}
-            </li>
-        @endforeach
-    </ul> -->
+        </div>
+    </div>
 </div>
 @endsection
